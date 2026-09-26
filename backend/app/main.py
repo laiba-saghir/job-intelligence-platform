@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 # Import routes
-from app.routes import auth
+from app.routes import auth, job, skill
 
 # Create the FastAPI application instance
 app = FastAPI(
@@ -22,6 +22,8 @@ app.add_middleware(
 
 # Include routers
 app.include_router(auth.router)
+app.include_router(job.router)
+app.include_router(skill.router)
 
 
 @app.get("/")
@@ -32,7 +34,9 @@ def read_root():
         "version": "1.0.0",
         "endpoints": {
             "docs": "/docs",
-            "auth": "/auth"
+            "auth": "/auth",
+            "job": "/job",
+            "skill": "/skill"
         }
     }
 
