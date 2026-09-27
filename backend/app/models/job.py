@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, Float, DateTime
+from sqlalchemy import Column, Integer, String, Text, Float, DateTime, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.database.connection import Base
@@ -21,6 +21,17 @@ class Job(Base):
     source = Column(String)
     url = Column(String)
     match_score = Column(Float, default=0.0)
+    
+    # Deduplication fields
+    fingerprint = Column(String, index=True)
+    sources = Column(Text)
+    duplicate_count = Column(Integer, default=1)
+    
+    # Fake detection fields
+    fake_score = Column(Integer, default=0)
+    is_verified = Column(Boolean, default=False)
+    is_suspicious = Column(Boolean, default=False)
+    is_active = Column(Boolean, default=True)
     
     # Timestamps
     created_at = Column(DateTime(timezone=True), server_default=func.now())

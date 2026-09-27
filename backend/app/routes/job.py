@@ -1,3 +1,4 @@
+from app.services.duplication import create_or_merge_job
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
@@ -26,13 +27,15 @@ def create_job(
     current_user: User = Depends(get_current_user)
 ):
     """
-    Create a new job posting
+    Create a new job posting.
+    Automatically detects and merges duplicates.
     """
-    new_job = Job(**job.dict())
-    db.add(new_job)
-    db.commit()
-    db.refresh(new_job)
-    return new_job
+    job_data = job.dict()
+    
+    # Create or merge with existing
+    result_job, is_new = create_or_merge_job(job_data, db)
+    
+    return result_job
 
 
 # ============================================
@@ -218,4 +221,72 @@ def add_skills_to_job(
         "title": job.title,
         "company": job.company,
         "skills": [s.name for s in job.skills]
+    }
+# ============================================
+# REPORT FAKE JOB
+# ============================================
+from pydantic import BaseModel
+
+
+class ReportRequest(BaseModel):
+    reason: str
+
+
+@router.post("/{job_id}/report")
+def report_fake_job(
+    job_id: int,
+    report: ReportRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Report a job as fake/suspicious.
+    """
+    job = db.query(Job).filter(Job.id == job_id).first()
+    if not job:
+        raise HTTPException(status_code=404, detail="Job not found")
+    
+    job.fake_score = min(100, (job.fake_score or 0) + 25)
+    
+    if job.fake_score >= 50:
+        job.is_suspicious = True
+    
+    db.commit()
+    db.refresh(job)
+    
+    return {
+        "message": "Report submitted. Thank you!",
+        "job_id": job.id,
+        "new_fake_score": job.fake_score,
+        "is_suspicious": job.is_suspicious,
+        "reported_by": current_user.email,
+        "reason": report.reason
+    }
+
+
+# ============================================
+# GET SUSPICIOUS JOBS
+# ============================================
+@router.get("/suspicious/list")
+def get_suspicious_jobs(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Get list of suspicious jobs.
+    """
+    jobs = db.query(Job).filter(Job.is_suspicious == True).all()
+    
+    return {
+        "total": len(jobs),
+        "jobs": [
+            {
+                "id": j.id,
+                "title": j.title,
+                "company": j.company,
+                "fake_score": j.fake_score,
+                "source": j.sources or j.source,
+            }
+            for j in jobs
+        ]
     }

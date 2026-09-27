@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.database.connection import Base
 
+
 class Application(Base):
     """
     Application model tracking job applications
@@ -12,7 +13,7 @@ class Application(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     job_id = Column(Integer, ForeignKey("jobs.id"), nullable=False)
-    status = Column(String, default="applied")  # applied, interview, rejected, offer, accepted
+    status = Column(String, default="applied")
     notes = Column(Text)
     
     # Timestamps
