@@ -33,21 +33,27 @@ class JobUpdate(BaseModel):
 
 
 class JobResponse(BaseModel):
-    """
-    Schema for returning job data
-    """
     id: int
     title: str
     company: str
-    description: Optional[str]
-    requirements: Optional[str]
-    location: Optional[str]
-    salary_range: Optional[str]
-    source: Optional[str]
-    url: Optional[str]
+    description: Optional[str] = None
+    requirements: Optional[str] = None
+    location: Optional[str] = None
+    salary_range: Optional[str] = None
+    source: Optional[str] = None
+    url: Optional[str] = None
     match_score: float
+    
+    # ✅ Naye Fields Add Karo
+    sources: Optional[str] = None
+    duplicate_count: int = 1
+    fake_score: int = 0
+    is_verified: bool = False
+    is_suspicious: bool = False
+    is_active: bool = True
+    
     created_at: datetime
-    updated_at: Optional[datetime]
-
+    updated_at: Optional[datetime] = None
+    
     class Config:
         from_attributes = True
