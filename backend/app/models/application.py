@@ -13,7 +13,9 @@ class Application(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     job_id = Column(Integer, ForeignKey("jobs.id"), nullable=False)
-    status = Column(String, default="applied")
+    
+    # Status: applied, interview, rejected, offer, accepted
+    status = Column(String, default="applied", nullable=False)
     notes = Column(Text)
     
     # Timestamps

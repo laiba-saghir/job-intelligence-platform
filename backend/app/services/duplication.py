@@ -79,6 +79,7 @@ def merge_jobs(existing_job: Job, new_data: dict, db: Session) -> Job:
     - Description: Always keep the longer/more detailed one
     - Requirements: Union of all skills mentioned
     - Duplicate Count: Increment automatically
+    - ✅ Verification & Fake Score: Update if new data is better/verified
     """
     # 1. Merge Sources
     existing_sources = set()
@@ -120,6 +121,18 @@ def merge_jobs(existing_job: Job, new_data: dict, db: Session) -> Job:
     # 5. Increment Counter
     existing_job.duplicate_count = (existing_job.duplicate_count or 1) + 1
     
+    # ✅ 6. NEW FIX: Update Verification & Fake Score if new data is verified or better
+    if new_data.get("is_verified"):
+        existing_job.is_verified = True
+        
+    new_fake_score = new_data.get("fake_score", 100)
+    existing_fake_score = existing_job.fake_score or 100
+    
+    # Agar nayi job ka score kam (behtar) hai, toh update karo
+    if new_fake_score < existing_fake_score:
+        existing_job.fake_score = new_fake_score
+        existing_job.is_suspicious = new_fake_score >= 50
+
     db.commit()
     db.refresh(existing_job)
     return existing_job
