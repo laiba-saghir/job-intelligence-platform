@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 # Import routes (aapki file names ke hisaab se)
-from app.routes import auth, job, skill, application
+from app.routes import auth, job, skill, application, analytics
 
 # Create the FastAPI application instance
 app = FastAPI(
@@ -27,6 +27,7 @@ app.include_router(auth.router)
 app.include_router(job.router)
 app.include_router(skill.router)
 app.include_router(application.router)
+app.include_router(analytics.router)
 
 
 @app.get("/")
@@ -43,7 +44,8 @@ def read_root():
             "auth": "/auth",
             "jobs": "/jobs",
             "skills": "/skills",
-            "applications": "/applications"
+            "applications": "/applications",
+            "analytics": "/analytics"  
         }
     }
 
