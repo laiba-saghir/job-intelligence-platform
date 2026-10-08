@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.database.connection import Base
@@ -16,6 +16,10 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     password_hash = Column(String, nullable=False)
     
+    # Verification fields (NEW)
+    is_verified = Column(Boolean, default=False, nullable=False)
+    verified_at = Column(DateTime(timezone=True), nullable=True)
+    
     # Timestamps
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
@@ -24,4 +28,4 @@ class User(Base):
     skills = relationship("Skill", secondary=user_skills, backref="users")
 
     def __repr__(self):
-        return f"<User(id={self.id}, email={self.email}, name={self.name})>"
+        return f"<User(id={self.id}, email={self.email}, verified={self.is_verified})>"

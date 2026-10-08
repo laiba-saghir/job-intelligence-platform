@@ -1,0 +1,321 @@
+/* ============================================
+   JOBCOCOON - AESTHETIC LOGIN PAGE
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #d97706;
+    --primary-dark: #b45309;
+    --secondary: #92400e;
+    --accent: #fcd34d;
+    --cream: #fef3c7;
+    --cream-light: #fffbeb;
+    --text: #451a03;
+    --text-muted: #92400e;
+    --border: #fde68a;
+    --white: #ffffff;
+    --success: #10b981;
+    --danger: #ef4444;
+    --bg-gradient: linear-gradient(135deg, #fef3c7 0%, #fcd34d 50%, #f59e0b 100%);
+    --btn-gradient: linear-gradient(135deg, #d97706 0%, #92400e 100%);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: var(--text);
+}
+
+/* CONTAINER */
+.container {
+    width: 100%;
+    max-width: 1100px;
+    background: var(--white);
+    border-radius: 24px;
+    box-shadow: 0 30px 80px rgba(69, 26, 3, 0.25);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* BRANDING SIDE */
+.branding-side {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    padding: 60px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.branding-side::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(217, 119, 6, 0.08);
+    border-radius: 50%;
+    top: -100px;
+    right: -100px;
+}
+
+.branding-side::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: rgba(217, 119, 6, 0.08);
+    border-radius: 50%;
+    bottom: -80px;
+    left: -80px;
+}
+
+.logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.brand-tagline {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+}
+
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+}
+
+.feature-item:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transform: translateX(5px);
+}
+
+.feature-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.feature-item h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+
+.feature-item p {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* AUTH SIDE */
+.auth-side {
+    padding: 60px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 380px;
+}
+
+.auth-form h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.form-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--text);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.3s;
+    background: var(--cream-light);
+    color: var(--text);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.1);
+}
+
+.form-group input::placeholder {
+    color: #a16207;
+    opacity: 0.5;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 15px;
+    background: var(--btn-gradient);
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(217, 119, 6, 0.4);
+}
+
+.btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.btn-toggle span {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.btn-toggle:hover span {
+    text-decoration: underline;
+}
+
+#message {
+    margin-top: 20px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    display: none;
+}
+
+#message.show { display: block; }
+
+#message.success {
+    background: #d1fae5;
+    color: #065f46;
+    border-left: 4px solid var(--success);
+}
+
+#message.error {
+    background: #fee2e2;
+    color: #991b1b;
+    border-left: 4px solid var(--danger);
+}
+
+#message.info {
+    background: #fef3c7;
+    color: #92400e;
+    border-left: 4px solid var(--primary);
+}
+
+@media (max-width: 900px) {
+    .container {
+        grid-template-columns: 1fr;
+        max-width: 450px;
+    }
+    .branding-side {
+        padding: 40px 30px;
+        text-align: center;
+    }
+    .brand-name { font-size: 32px; }
+    .features { display: none; }
+    .auth-side { padding: 40px 30px; }
+}
+
+@media (max-width: 480px) {
+    body { padding: 10px; }
+    .container { border-radius: 16px; }
+    .branding-side, .auth-side { padding: 30px 20px; }
+    .logo { width: 90px; height: 90px; }
+    .brand-name { font-size: 28px; }
+}

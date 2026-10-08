@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobCocoon - Verify Email</title>
+    
+    <link rel="icon" type="image/png" href="../assets/JobCocoon logo.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <style>
+        .verify-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .verify-card {
+            background: white;
+            border-radius: 24px;
+            padding: 60px 50px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(69, 26, 3, 0.25);
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        .verify-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .verify-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            color: #451a03;
+            margin-bottom: 15px;
+        }
+        
+        .verify-message {
+            font-size: 16px;
+            color: #92400e;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .btn-home {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #d97706 0%, #92400e 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-family: inherit;
+        }
+        
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(217, 119, 6, 0.4);
+        }
+        
+        .loading-spinner {
+            border: 4px solid #fde68a;
+            border-top: 4px solid #d97706;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="verify-container">
+        <div class="verify-card">
+            
+            <!-- LOADING STATE -->
+            <div id="loadingState">
+                <div class="loading-spinner"></div>
+                <h2 class="verify-title">Verifying your email...</h2>
+                <p class="verify-message">Please wait a moment 🦋</p>
+            </div>
+            
+            <!-- SUCCESS STATE -->
+            <div id="successState" style="display: none;">
+                <div class="verify-icon">✅</div>
+                <h2 class="verify-title">Email Verified!</h2>
+                <p class="verify-message">
+                    Your email has been successfully verified. 
+                    You can now login to JobCocoon and start your 
+                    career transformation journey! 🦋
+                </p>
+                <a href="../index.html" class="btn-home">
+                    Go to Login
+                </a>
+            </div>
+            
+            <!-- ERROR STATE -->
+            <div id="errorState" style="display: none;">
+                <div class="verify-icon">❌</div>
+                <h2 class="verify-title">Verification Failed</h2>
+                <p class="verify-message" id="errorMessage">
+                    The verification link is invalid or expired.
+                </p>
+                <a href="../index.html" class="btn-home">
+                    Go to Login
+                </a>
+            </div>
+            
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'http://localhost:5000';
+        
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Get token from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            
+            const loadingState = document.getElementById('loadingState');
+            const successState = document.getElementById('successState');
+            const errorState = document.getElementById('errorState');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            if (!token) {
+                loadingState.style.display = 'none';
+                errorState.style.display = 'block';
+                errorMessage.textContent = 'No verification token provided.';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/verify?token=${token}`, {
+                    method: 'GET',
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    loadingState.style.display = 'none';
+                    successState.style.display = 'block';
+                } else {
+                    loadingState.style.display = 'none';
+                    errorState.style.display = 'block';
+                    errorMessage.textContent = data.detail || 'Verification failed.';
+                }
+                
+            } catch (error) {
+                loadingState.style.display = 'none';
+                errorState.style.display = 'block';
+                errorMessage.textContent = 'Cannot connect to server. Please try again.';
+            }
+        });
+    </script>
+    
+</body>
+</html>

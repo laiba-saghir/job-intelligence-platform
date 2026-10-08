@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobCocoon - Transform Your Career</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/JobCocoon logo.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        
+        <!-- LEFT SIDE - BRANDING -->
+        <div class="branding-side">
+            
+            <!-- Logo -->
+            <img src="assets/JobCocoon logo.png" alt="JobCocoon Logo" class="logo">
+            
+            <!-- Brand Text -->
+            <h1 class="brand-name">JobCocoon</h1>
+            <p class="brand-tagline">Transform Your Career</p>
+            
+            <!-- Features List -->
+            <div class="features">
+                <div class="feature-item">
+                    <span class="feature-icon">🦋</span>
+                    <div>
+                        <h3>Smart Job Matching</h3>
+                        <p>Find jobs that match your skills</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🎯</span>
+                    <div>
+                        <h3>AI-Powered Insights</h3>
+                        <p>Get personalized recommendations</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📊</span>
+                    <div>
+                        <h3>Track Your Progress</h3>
+                        <p>Monitor your applications</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RIGHT SIDE - AUTH FORMS -->
+        <div class="auth-side">
+            
+            <div class="auth-card">
+                
+                <!-- LOGIN FORM -->
+                <form id="loginForm" class="auth-form">
+                    <h2>Welcome Back! 🦋</h2>
+                    <p class="form-subtitle">Sign in to continue your journey</p>
+                    
+                    <div class="form-group">
+                        <label for="email">📧 Email</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            placeholder="you@example.com"
+                            required
+                            autocomplete="email"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">🔒 Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            placeholder="Enter your password"
+                            required
+                            autocomplete="current-password"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">
+                        Sign In
+                    </button>
+                </form>
+                
+                <!-- REGISTER FORM (Hidden by default) -->
+                <form id="registerForm" class="auth-form" style="display: none;">
+                    <h2>Join JobCocoon! 🦋</h2>
+                    <p class="form-subtitle">Start your career transformation</p>
+                    
+                    <div class="form-group">
+                        <label for="regName">👤 Full Name</label>
+                        <input 
+                            type="text" 
+                            id="regName" 
+                            placeholder="Your Full Name"
+                            required
+                            autocomplete="name"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="regEmail">📧 Email</label>
+                        <input 
+                            type="email" 
+                            id="regEmail" 
+                            placeholder="you@example.com"
+                            required
+                            autocomplete="email"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="regPassword">🔒 Password</label>
+                        <input 
+                            type="password" 
+                            id="regPassword" 
+                            placeholder="Min 8 characters"
+                            required
+                            minlength="8"
+                            autocomplete="new-password"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">
+                        Create Account
+                    </button>
+                </form>
+                
+                <!-- TOGGLE BUTTON -->
+                <button type="button" id="toggleForm" class="btn-toggle">
+                    New to JobCocoon? <span>Register</span>
+                </button>
+                
+                <!-- MESSAGE -->
+                <div id="message"></div>
+                
+            </div>
+            
+        </div>
+        
+    </div>
+    
+    <!-- JS -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    
+</body>
+</html>
