@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobCocoon - Applications</title>
+    
+    <link rel="icon" type="image/png" href="../assets/JobCocoon logo.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/applications.css">
+</head>
+<body>
+    
+    <div class="dashboard">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../assets/JobCocoon logo.png" alt="JobCocoon">
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item" title="Dashboard">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="jobs.html" class="nav-item" title="Jobs">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Jobs</span>
+                </a>
+                <a href="applications.html" class="nav-item active" title="Applications">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>Applications</span>
+                </a>
+                <a href="skills.html" class="nav-item" title="Skills">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Skills</span>
+                </a>
+                <a href="analytics.html" class="nav-item" title="Analytics">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+            </nav>
+            <div class="sidebar-bottom">
+                <a href="#" class="nav-item" title="Settings">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <button class="nav-item logout-btn" onclick="logout()" title="Logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- MAIN -->
+        <main class="main-content">
+            
+            <!-- TOP BAR -->
+            <header class="topbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search applications..." id="searchInput">
+                </div>
+                <div class="topbar-actions">
+                    <button class="icon-btn" title="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <div class="user-menu">
+                        <div class="user-avatar" id="userAvatar">L</div>
+                        <div class="user-info">
+                            <span class="user-name" id="userName">Laiba</span>
+                            <span class="user-email" id="userEmail">laiba@test.com</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+                <div>
+                    <h1>Applications 📝</h1>
+                    <p class="page-subtitle">Track all your job applications in one place</p>
+                </div>
+            </div>
+            
+            <!-- STATS CARDS -->
+            <section class="stats-row" id="statsRow">
+                <div class="stat-mini-card">
+                    <div class="stat-mini-icon stat-total">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+                    <div>
+                        <div class="stat-mini-value" id="statTotal">—</div>
+                        <div class="stat-mini-label">Total</div>
+                    </div>
+                </div>
+                <div class="stat-mini-card">
+                    <div class="stat-mini-icon stat-applied">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </div>
+                    <div>
+                        <div class="stat-mini-value" id="statApplied">—</div>
+                        <div class="stat-mini-label">Applied</div>
+                    </div>
+                </div>
+                <div class="stat-mini-card">
+                    <div class="stat-mini-icon stat-interview">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <div>
+                        <div class="stat-mini-value" id="statInterview">—</div>
+                        <div class="stat-mini-label">Interviews</div>
+                    </div>
+                </div>
+                <div class="stat-mini-card">
+                    <div class="stat-mini-icon stat-offer">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <div class="stat-mini-value" id="statOffer">—</div>
+                        <div class="stat-mini-label">Offers</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- FILTER TABS -->
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all" onclick="switchFilter('all')">
+                    <i class="fa-solid fa-list"></i> All
+                </button>
+                <button class="filter-tab" data-filter="applied" onclick="switchFilter('applied')">
+                    <i class="fa-solid fa-paper-plane"></i> Applied
+                </button>
+                <button class="filter-tab" data-filter="interview" onclick="switchFilter('interview')">
+                    <i class="fa-solid fa-comments"></i> Interview
+                </button>
+                <button class="filter-tab" data-filter="offer" onclick="switchFilter('offer')">
+                    <i class="fa-solid fa-trophy"></i> Offer
+                </button>
+                <button class="filter-tab" data-filter="rejected" onclick="switchFilter('rejected')">
+                    <i class="fa-solid fa-xmark"></i> Rejected
+                </button>
+            </div>
+            
+            <!-- APPLICATIONS LIST -->
+            <div class="applications-list" id="applicationsList">
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+            </div>
+            
+        </main>
+    </div>
+    
+    <!-- UPDATE STATUS MODAL -->
+    <div class="modal" id="updateModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>Update Status</h2>
+                <button class="modal-close" onclick="closeUpdateModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form id="updateForm" class="modal-body">
+                <input type="hidden" id="updateAppId">
+                
+                <div class="form-group-modal">
+                    <label>Status</label>
+                    <select id="updateStatus" required>
+                        <option value="applied">Applied</option>
+                        <option value="interview">Interview</option>
+                        <option value="offer">Offer</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                
+                <div class="form-group-modal">
+                    <label>Notes</label>
+                    <textarea id="updateNotes" rows="4" placeholder="Add notes about this application..."></textarea>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" onclick="closeUpdateModal()">Cancel</button>
+                    <button type="submit" class="btn-primary-modal">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="../js/api.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/applications.js"></script>
+    
+</body>
+</html>

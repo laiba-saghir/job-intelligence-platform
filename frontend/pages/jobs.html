@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobCocoon - Jobs</title>
+    
+    <link rel="icon" type="image/png" href="../assets/JobCocoon logo.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/jobs.css">
+</head>
+<body>
+    
+    <div class="dashboard">
+        
+        <!-- ============================================
+             SIDEBAR
+             ============================================ -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../assets/JobCocoon logo.png" alt="JobCocoon">
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item" title="Dashboard">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="jobs.html" class="nav-item active" title="Jobs">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Jobs</span>
+                </a>
+                <a href="applications.html" class="nav-item" title="Applications">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>Applications</span>
+                </a>
+                <a href="skills.html" class="nav-item" title="Skills">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Skills</span>
+                </a>
+                <a href="analytics.html" class="nav-item" title="Analytics">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-bottom">
+                <a href="#" class="nav-item" title="Settings">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <button class="nav-item logout-btn" onclick="logout()" title="Logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- ============================================
+             MAIN CONTENT
+             ============================================ -->
+        <main class="main-content">
+            
+            <!-- TOP BAR -->
+            <header class="topbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search jobs, companies, skills..." id="searchInput">
+                </div>
+                
+                <div class="topbar-actions">
+                    <button class="icon-btn" title="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    
+                    <div class="user-menu">
+                        <div class="user-avatar" id="userAvatar">L</div>
+                        <div class="user-info">
+                            <span class="user-name" id="userName">Laiba</span>
+                            <span class="user-email" id="userEmail">laiba@test.com</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+                <div>
+                    <h1>Jobs 💼</h1>
+                    <p class="page-subtitle">Find and track jobs that match your skills</p>
+                </div>
+                <button class="btn-add" onclick="openAddJobModal()">
+                    <i class="fa-solid fa-plus"></i>
+                    Add Job
+                </button>
+            </div>
+            
+            <!-- FILTER TABS -->
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all" onclick="switchFilter('all')">
+                    <i class="fa-solid fa-list"></i>
+                    All Jobs
+                </button>
+                <button class="filter-tab" data-filter="matched" onclick="switchFilter('matched')">
+                    <i class="fa-solid fa-bullseye"></i>
+                    Matched
+                </button>
+                <button class="filter-tab" data-filter="verified" onclick="switchFilter('verified')">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Verified
+                </button>
+            </div>
+            
+            <!-- JOBS GRID -->
+            <div class="jobs-grid" id="jobsGrid">
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+            </div>
+            
+        </main>
+    </div>
+    
+    <!-- ============================================
+         ADD JOB MODAL
+         ============================================ -->
+    <div class="modal" id="addJobModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Job</h2>
+                <button class="modal-close" onclick="closeAddJobModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form id="addJobForm" class="modal-body">
+                <div class="form-row">
+                    <div class="form-group-modal">
+                        <label>Job Title *</label>
+                        <input type="text" id="jobTitle" required placeholder="e.g. Python Developer">
+                    </div>
+                    <div class="form-group-modal">
+                        <label>Company *</label>
+                        <input type="text" id="jobCompany" required placeholder="e.g. Systems Limited">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group-modal">
+                        <label>Location</label>
+                        <input type="text" id="jobLocation" placeholder="e.g. Karachi">
+                    </div>
+                    <div class="form-group-modal">
+                        <label>Salary Range</label>
+                        <input type="text" id="jobSalary" placeholder="e.g. 100,000 - 200,000">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group-modal">
+                        <label>Source</label>
+                        <input type="text" id="jobSource" placeholder="e.g. LinkedIn">
+                    </div>
+                    <div class="form-group-modal">
+                        <label>Job URL</label>
+                        <input type="url" id="jobUrl" placeholder="https://...">
+                    </div>
+                </div>
+                <div class="form-group-modal">
+                    <label>Description</label>
+                    <textarea id="jobDescription" rows="3" placeholder="Job description..."></textarea>
+                </div>
+                <div class="form-group-modal">
+                    <label>Required Skills (comma separated)</label>
+                    <input type="text" id="jobSkills" placeholder="e.g. Python, SQL, Docker">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" onclick="closeAddJobModal()">Cancel</button>
+                    <button type="submit" class="btn-primary-modal">Add Job</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- ============================================
+         JOB DETAILS MODAL
+         ============================================ -->
+    <div class="modal" id="jobDetailModal">
+        <div class="modal-content" id="jobDetailContent">
+            <!-- Filled by JS -->
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="../js/api.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/jobs.js"></script>
+    
+</body>
+</html>
