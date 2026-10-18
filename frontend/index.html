@@ -13,6 +13,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -33,27 +36,37 @@
             
             <!-- Features List -->
             <div class="features">
+                
                 <div class="feature-item">
-                    <span class="feature-icon">🦋</span>
+                    <span class="feature-icon">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </span>
                     <div>
                         <h3>Smart Job Matching</h3>
                         <p>Find jobs that match your skills</p>
                     </div>
                 </div>
+                
                 <div class="feature-item">
-                    <span class="feature-icon">🎯</span>
+                    <span class="feature-icon">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </span>
                     <div>
                         <h3>AI-Powered Insights</h3>
                         <p>Get personalized recommendations</p>
                     </div>
                 </div>
+                
                 <div class="feature-item">
-                    <span class="feature-icon">📊</span>
+                    <span class="feature-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </span>
                     <div>
                         <h3>Track Your Progress</h3>
                         <p>Monitor your applications</p>
                     </div>
                 </div>
+                
             </div>
             
         </div>
@@ -65,11 +78,14 @@
                 
                 <!-- LOGIN FORM -->
                 <form id="loginForm" class="auth-form">
-                    <h2>Welcome Back! 🦋</h2>
+                    <h2>Welcome Back!</h2>
                     <p class="form-subtitle">Sign in to continue your journey</p>
                     
                     <div class="form-group">
-                        <label for="email">📧 Email</label>
+                        <label for="email">
+                            <i class="fa-regular fa-envelope"></i>
+                            Email
+                        </label>
                         <input 
                             type="email" 
                             id="email" 
@@ -80,7 +96,10 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="password">🔒 Password</label>
+                        <label for="password">
+                            <i class="fa-solid fa-lock"></i>
+                            Password
+                        </label>
                         <input 
                             type="password" 
                             id="password" 
@@ -97,11 +116,14 @@
                 
                 <!-- REGISTER FORM (Hidden by default) -->
                 <form id="registerForm" class="auth-form" style="display: none;">
-                    <h2>Join JobCocoon! 🦋</h2>
+                    <h2>Join JobCocoon</h2>
                     <p class="form-subtitle">Start your career transformation</p>
                     
                     <div class="form-group">
-                        <label for="regName">👤 Full Name</label>
+                        <label for="regName">
+                            <i class="fa-regular fa-user"></i>
+                            Full Name
+                        </label>
                         <input 
                             type="text" 
                             id="regName" 
@@ -112,7 +134,10 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="regEmail">📧 Email</label>
+                        <label for="regEmail">
+                            <i class="fa-regular fa-envelope"></i>
+                            Email
+                        </label>
                         <input 
                             type="email" 
                             id="regEmail" 
@@ -123,7 +148,10 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="regPassword">🔒 Password</label>
+                        <label for="regPassword">
+                            <i class="fa-solid fa-lock"></i>
+                            Password
+                        </label>
                         <input 
                             type="password" 
                             id="regPassword" 
