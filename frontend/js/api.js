@@ -2,7 +2,7 @@
 // JOBCOCOON - API HELPER
 // ============================================
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://job-intelligence-platform-production-af45.up.railway.app';
 
 
 // ============================================
