@@ -212,4 +212,4 @@ def send_verification_email(to_email: str, user_name: str, verification_token: s
         
     except Exception as e:
         print(f"❌ Failed to send email: {str(e)}")
-        return Falsee
+        return False
