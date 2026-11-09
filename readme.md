@@ -1,11 +1,11 @@
-**THEEK HAI LAIBA! 🎯** Yeh lo **EIK hi complete code** — bas `Ctrl+A`, `Delete`, aur paste.
+**THEEK HAI LAIBA! ** Yeh lo **EIK hi complete code** — bas `Ctrl+A`, `Delete`, aur paste.
 
 ---
 
 **VS Code mein `readme.md` kholo. Sab kuch select karo, delete karo, aur yeh poora paste kar do:**
 
 ```markdown
-# 🌿 JobCocoon
+#  JobCocoon
 
 > **Transform Your Career** — An AI-powered job intelligence platform with smart matching, email verification, and a beautiful pastel-green dashboard.
 
@@ -18,20 +18,20 @@
 
 ---
 
-## 📖 Overview
+##  Overview
 
 **JobCocoon** is a full-stack job intelligence platform that revolutionizes the job hunting experience. From **email-verified registration** to a **beautiful pastel-green dashboard**, everything is built with production-grade practices.
 
-### 🎯 What It Does
+### What It Does
 
-- 📧 **Email Verification** — Gmail SMTP with secure token flow
-- 🔐 **JWT Authentication** — Production-grade security
-- 💼 **Jobs Management** — Full CRUD with deduplication
-- 🧠 **Smart Matching** — Custom DSA algorithm
-- 🛡️ **Fake Detection** — AI-powered scam filtering
-- 📊 **Analytics** — Real-time insights with Chart.js
-- 📝 **Application Tracker** — Track your journey
-- 🌿 **Pastel Green UI** — Cozy, professional design
+-  **Email Verification** — Gmail SMTP with secure token flow
+-  **JWT Authentication** — Production-grade security
+-  **Jobs Management** — Full CRUD with deduplication
+-  **Smart Matching** — Custom DSA algorithm
+-  **Fake Detection** — AI-powered scam filtering
+-  **Analytics** — Real-time insights with Chart.js
+-  **Application Tracker** — Track your journey
+-  **Pastel Green UI** — Cozy, professional design
 
 > **"Your cozy corner for career transformation."** 🦋
 
@@ -39,7 +39,7 @@
 
 ## ✨ Features
 
-### ✅ Backend (100% Complete)
+###  Backend (100% Complete)
 
 | Authentication | Jobs Management |
 |---|---|
@@ -50,7 +50,7 @@
 | Protected routes | Community reporting |
 | Resend verification | 24-hour token expiry |
 
-| Skills System | Matching Algorithm ⭐ |
+| Skills System | Matching Algorithm |
 |---|---|
 | Master skills database | Custom DSA-based engine |
 | User ↔ Skills (many-to-many) | Match score (0-100%) |
@@ -64,17 +64,17 @@
 | Personal notes | Application analytics |
 | Statistics | Job posting trends |
 
-### ✅ Frontend (90% Complete)
+###  Frontend (90% Complete)
 
-- 🌿 **Pastel Green Theme** — Cozy, modern SaaS design
-- 🎨 **Login/Register** — Split layout, Font Awesome icons
-- 📧 **Email Verification Page** — Auto-verify on click
-- 📊 **Dashboard** — Full stats, Chart.js trends, best matches
-- 📱 **Fully Responsive** — Mobile + Tablet + Desktop
-- 🔔 **Notification bell** + User menu
-- 🔍 **Global search bar**
+- **Pastel Green Theme** — Cozy, modern SaaS design
+- **Login/Register** — Split layout, Font Awesome icons
+- **Email Verification Page** — Auto-verify on click
+- **Dashboard** — Full stats, Chart.js trends, best matches
+- **Fully Responsive** — Mobile + Tablet + Desktop
+- **Notification bell** + User menu
+- **Global search bar**
 
-### 🔄 In Progress
+### In Progress
 
 - [ ] Jobs page (browse, filter, search)
 - [ ] Applications page (track all)
@@ -232,31 +232,31 @@ jobcocoon/
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
-### 🔐 Login Page
+###  Login Page
 ![Login Page](screenshots/login.png)
 
 *Split layout — auth form on left, branding on right. Pastel green theme with Font Awesome icons.*
 
-### 📧 Email Verification
+###  Email Verification
 ![Email Verification](screenshots/verify-email.png)
 
 *Beautiful auto-verification page with loading, success, and error states.*
 
-### 📊 Dashboard
+###  Dashboard
 ![Dashboard](screenshots/dashboard.png)
 
 *Complete dashboard with 4 metric cards, sidebar navigation, and user menu.*
 
-### 📈 Charts & Analytics
+### Charts & Analytics
 ![Charts](screenshots/charts.png)
 
 *Hiring demand trend (Chart.js line chart) + Top skills in demand (progress bars).*
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 - Python 3.11+
@@ -346,7 +346,7 @@ from app.models.skill import Skill, user_skills, job_skills
 from app.models.verification_token import VerificationToken
 
 Base.metadata.create_all(bind=engine)
-print("✅ Database initialized!")
+print(" Database initialized!")
 exit()
 ```
 
@@ -375,7 +375,7 @@ Open `frontend/index.html` with **Live Server**.
 
 ---
 
-## 📚 API Endpoints
+##  API Endpoints
 
 ### Authentication
 
@@ -475,7 +475,7 @@ O(n × m) where:
 
 ---
 
-## 🗄️ Database Schema
+##  Database Schema
 
 ```
 users                          skills
@@ -516,30 +516,30 @@ updated_at
 
 ## 🎯 Roadmap
 
-### ✅ Phase 1: Foundation
+### Phase 1: Foundation
 - [x] Project setup
 - [x] Database models
 - [x] JWT authentication
 - [x] Jobs CRUD
 
-### ✅ Phase 2: Intelligence
+### Phase 2: Intelligence
 - [x] Skills system
 - [x] Matching algorithm
 - [x] Deduplication (MD5 + fuzzy)
 - [x] Fake detection
 
-### ✅ Phase 3: Tracking
+### Phase 3: Tracking
 - [x] Application tracker
 - [x] Status updates
 - [x] Analytics
 
-### ✅ Phase 4: Email Verification
+### Phase 4: Email Verification
 - [x] Gmail SMTP setup
 - [x] Token-based verification
 - [x] HTML email template
 - [x] Resend functionality
 
-### ✅ Phase 5: Frontend (90%)
+### Phase 5: Frontend (90%)
 - [x] Login/Register (pastel green)
 - [x] Email verification page
 - [x] Dashboard with charts
@@ -548,24 +548,24 @@ updated_at
 - [ ] Skills page
 - [ ] Analytics page
 
-### ⏳ Phase 6: Automation
+###  Phase 6: Automation
 - [ ] n8n workflows
 - [ ] Job scraping (RemoteOK, Remotive)
 - [ ] Notifications
 
-### ⏳ Phase 7: AI
+###  Phase 7: AI
 - [ ] Resume parsing
 - [ ] Skill extraction
 - [ ] Smart recommendations
 
-### ⏳ Phase 8: Deployment
+### Phase 8: Deployment
 - [ ] Backend → Railway
 - [ ] Frontend → Vercel
 - [ ] Database → PostgreSQL
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 ### Manual Testing (Swagger UI)
 
@@ -573,7 +573,7 @@ updated_at
 2. **Register** → check email
 3. **Click verification link** in inbox
 4. **Login** with credentials
-5. **Copy token** → Authorize (🔒)
+5. **Copy token** → Authorize 
 6. **Test all endpoints**
 
 ### Complete Flow Test
@@ -618,25 +618,25 @@ GET /analytics/dashboard
 
 ---
 
-## 📈 Progress
+##  Progress
 
 | Day | Feature | Status |
 |-----|---------|--------|
-| Day 1 | Backend Setup + Auth + Jobs CRUD | ✅ |
-| Day 2 | Skills + Matching Algorithm | ✅ |
-| Day 3 | Deduplication + Fake Detection | ✅ |
-| Day 4 | Application Tracker | ✅ |
-| Day 5 | Analytics Dashboard | ✅ |
-| Day 6 | Email Verification + Frontend Login | ✅ |
-| Day 7 | Dashboard UI + Charts | ✅ |
-| Day 8 | Remaining Frontend Pages | 🔄 |
-| Day 9 | Job Scraping (n8n) | ⏳ |
-| Day 10 | AI Integration | ⏳ |
-| Day 11 | Deployment | ⏳ |
+| Day 1 | Backend Setup + Auth + Jobs CRUD 
+| Day 2 | Skills + Matching Algorithm 
+| Day 3 | Deduplication + Fake Detection 
+| Day 4 | Application Tracker 
+| Day 5 | Analytics Dashboard 
+| Day 6 | Email Verification + Frontend Login 
+| Day 7 | Dashboard UI + Charts 
+| Day 8 | Remaining Frontend Pages 
+| Day 9 | Job Scraping (n8n) 
+| Day 10 | AI Integration 
+| Day 11 | Deployment
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are welcome!
 
@@ -657,23 +657,23 @@ Contributions are welcome!
 
 ---
 
-## 📄 License
+##  License
 
 MIT License — see [LICENSE](LICENSE) file.
 
 ---
 
-## 👩‍💻 Author
+## Author
 
 **Laiba Saghir** — AI Automation Engineer & Full-Stack Developer
 
-- 🐙 **GitHub:** [@LAIBA5463](https://github.com/LAIBA5463)
-- 💼 **LinkedIn:** [Laiba Saghir](https://www.linkedin.com/in/laiba-saghir-7a7411397/)
+-  **GitHub:** [@LAIBA5463](https://github.com/LAIBA5463)
+-  **LinkedIn:** [Laiba Saghir](https://www.linkedin.com/in/laiba-saghir-7a7411397/)
 - 🌐 **Portfolio:** [View Portfolio](https://laiba-46lxkm9r4-laibasaghir566-3600.vercel.app/)
 
 ---
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - [FastAPI](https://fastapi.tiangolo.com/) — Modern web framework
 - [SQLAlchemy](https://www.sqlalchemy.org/) — Python SQL toolkit
@@ -695,11 +695,11 @@ MIT License — see [LICENSE](LICENSE) file.
 
 <div align="center">
 
-### ⭐ If you find this project useful, please give it a star! ⭐
+### ⭐ If you find this project useful, please give it a star! 
 
-**Made with 💚 by [Laiba Saghir](https://github.com/LAIBA5463)**
+**Made by [Laiba Saghir](https://github.com/LAIBA5463)**
 
-*Transform Your Career* 🦋
+*Transform Your Career* 
 
 </div>
 ```

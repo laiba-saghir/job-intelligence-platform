@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobCocoon - Analytics</title>
+    
+    <link rel="icon" type="image/png" href="../assets/JobCocoon logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/analytics.css">
+</head>
+<body>
+    
+    <div class="dashboard">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../assets/JobCocoon logo.png" alt="JobCocoon">
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item" title="Dashboard">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="jobs.html" class="nav-item" title="Jobs">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Jobs</span>
+                </a>
+                <a href="applications.html" class="nav-item" title="Applications">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>Applications</span>
+                </a>
+                <a href="skills.html" class="nav-item" title="Skills">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Skills</span>
+                </a>
+                <a href="analytics.html" class="nav-item active" title="Analytics">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+            </nav>
+            <div class="sidebar-bottom">
+                <a href="#" class="nav-item" title="Settings">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <button class="nav-item logout-btn" onclick="logout()" title="Logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- MAIN -->
+        <main class="main-content">
+            
+            <!-- TOP BAR -->
+            <header class="topbar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search analytics..." id="searchInput">
+                </div>
+                <div class="topbar-actions">
+                    <button class="icon-btn" title="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <div class="user-menu">
+                        <div class="user-avatar" id="userAvatar">L</div>
+                        <div class="user-info">
+                            <span class="user-name" id="userName">Laiba</span>
+                            <span class="user-email" id="userEmail">laiba@test.com</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+                <div>
+                    <h1>Analytics 📈</h1>
+                    <p class="page-subtitle">Insights into your job search journey</p>
+                </div>
+            </div>
+            
+            <!-- METRICS ROW -->
+            <section class="analytics-metrics">
+                <div class="analytics-card">
+                    <div class="analytics-icon analytics-icon-blue">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                    <div class="analytics-info">
+                        <div class="analytics-value" id="totalJobs">—</div>
+                        <div class="analytics-label">Total Jobs</div>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon analytics-icon-green">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+                    <div class="analytics-info">
+                        <div class="analytics-value" id="totalApps">—</div>
+                        <div class="analytics-label">Applications</div>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon analytics-icon-purple">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div class="analytics-info">
+                        <div class="analytics-value" id="totalSkills">—</div>
+                        <div class="analytics-label">Your Skills</div>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon analytics-icon-amber">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div class="analytics-info">
+                        <div class="analytics-value" id="successRate">—</div>
+                        <div class="analytics-label">Success Rate</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- CHARTS ROW 1 -->
+            <section class="charts-grid">
+                <div class="card" style="grid-column: span 2;">
+                    <div class="card-header">
+                        <h2>Hiring Demand Trend</h2>
+                        <span class="card-badge">Last 30 days</span>
+                    </div>
+                    <div class="chart-large">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- CHARTS ROW 2 -->
+            <section class="charts-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Top Skills in Demand</h2>
+                    </div>
+                    <div class="chart-medium">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Application Status</h2>
+                    </div>
+                    <div class="chart-medium">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- INSIGHTS -->
+            <section class="card full-width">
+                <div class="card-header">
+                    <h2>💡 Smart Insights</h2>
+                </div>
+                <div id="insightsList" class="insights-list">
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line"></div>
+                </div>
+            </section>
+            
+        </main>
+    </div>
+    
+    <script src="../js/api.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/analytics.js"></script>
+    
+</body>
+</html>

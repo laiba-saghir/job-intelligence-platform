@@ -1,21 +1,22 @@
-from app.services.duplication import create_or_merge_job
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
-from typing import List, Optional
 from sqlalchemy import or_
+from typing import List, Optional
+from pydantic import BaseModel
 
 from app.database.connection import get_db
 from app.models.job import Job
 from app.models.skill import Skill
+from app.models.user import User
 from app.schemas.job import JobCreate, JobUpdate, JobResponse
 from app.schemas.skill import UserSkillsUpdate
 from app.routes.auth import get_current_user
-from app.models.user import User
+
+from app.services.duplication import create_or_merge_job
 from app.services.matching import rank_jobs_for_user
 
-
+# Initialize the router exactly ONCE
 router = APIRouter(prefix="/jobs", tags=["Jobs"])
-
 
 # ============================================
 # CREATE JOB
@@ -107,6 +108,34 @@ def get_matched_jobs(
 
 
 # ============================================
+# GET SUSPICIOUS JOBS
+# ============================================
+@router.get("/suspicious/list")
+def get_suspicious_jobs(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Get list of suspicious jobs.
+    """
+    jobs = db.query(Job).filter(Job.is_suspicious == True).all()
+    
+    return {
+        "total": len(jobs),
+        "jobs": [
+            {
+                "id": j.id,
+                "title": j.title,
+                "company": j.company,
+                "fake_score": j.fake_score,
+                "source": j.sources or j.source,
+            }
+            for j in jobs
+        ]
+    }
+
+
+# ============================================
 # GET SINGLE JOB
 # ============================================
 @router.get("/{job_id}", response_model=JobResponse)
@@ -181,7 +210,7 @@ def delete_job(
 
 
 # ============================================
-# ADD SKILLS TO JOB ⭐ (Step 7 merged)
+# ADD SKILLS TO JOB ⭐
 # ============================================
 @router.post("/{job_id}/skills")
 def add_skills_to_job(
@@ -222,15 +251,13 @@ def add_skills_to_job(
         "company": job.company,
         "skills": [s.name for s in job.skills]
     }
+
+
 # ============================================
 # REPORT FAKE JOB
 # ============================================
-from pydantic import BaseModel
-
-
 class ReportRequest(BaseModel):
     reason: str
-
 
 @router.post("/{job_id}/report")
 def report_fake_job(
@@ -261,32 +288,4 @@ def report_fake_job(
         "is_suspicious": job.is_suspicious,
         "reported_by": current_user.email,
         "reason": report.reason
-    }
-
-
-# ============================================
-# GET SUSPICIOUS JOBS
-# ============================================
-@router.get("/suspicious/list")
-def get_suspicious_jobs(
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    """
-    Get list of suspicious jobs.
-    """
-    jobs = db.query(Job).filter(Job.is_suspicious == True).all()
-    
-    return {
-        "total": len(jobs),
-        "jobs": [
-            {
-                "id": j.id,
-                "title": j.title,
-                "company": j.company,
-                "fake_score": j.fake_score,
-                "source": j.sources or j.source,
-            }
-            for j in jobs
-        ]
     }

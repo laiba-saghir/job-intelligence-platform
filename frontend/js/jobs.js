@@ -445,4 +445,29 @@ function showToast(message, type = 'info') {
         bottom: 24px;
         right: 24px;
         padding: 14px 20px;
-        background: ${type === 'success' ? '#10b981
+        background: ${
+            type === 'success' ? '#10b981' :
+            type === 'error' ? '#ef4444' :
+            type === 'warning' ? '#f59e0b' :
+            '#3b82f6'
+        };
+        color: white;
+        border-radius: 10px;
+        font-family: Inter, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        z-index: 9999;
+        animation: slideIn 0.3s ease;
+    `;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
+
+// Close modal on outside click
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal')) {
+        e.target.classList.remove('active');
+    }
+});
+            
