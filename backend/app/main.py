@@ -3,6 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 # Import routes (aapki file names ke hisaab se)
 from app.routes import auth, job, skill, application, analytics
+from app.database.connection import engine, Base
+import app.models  # saare models load karta hai
+Base.metadata.create_all(bind=engine)
+
 
 # Create the FastAPI application instance
 app = FastAPI(
