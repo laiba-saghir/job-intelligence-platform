@@ -1,10 +1,3 @@
-**THEEK HAI LAIBA! ** Yeh lo **EIK hi complete code** — bas `Ctrl+A`, `Delete`, aur paste.
-
----
-
-**VS Code mein `readme.md` kholo. Sab kuch select karo, delete karo, aur yeh poora paste kar do:**
-
-```markdown
 #  JobCocoon
 
 > **Transform Your Career** — An AI-powered job intelligence platform with smart matching, email verification, and a beautiful pastel-green dashboard.
@@ -159,7 +152,7 @@
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```text
 jobcocoon/
@@ -399,7 +392,7 @@ Open `frontend/index.html` with **Live Server**.
 | `POST` | `/jobs/{id}/skills` | Add skills to job |
 | `POST` | `/jobs/{id}/report` | Report fake job |
 | `GET` | `/jobs/suspicious/list` | List suspicious jobs |
-| `GET` | `/jobs/matched/for-me` | Jobs ranked by match score ⭐ |
+| `GET` | `/jobs/matched/for-me` | Jobs ranked by match score  |
 
 ### Skills
 
@@ -433,7 +426,7 @@ Open `frontend/index.html` with **Live Server**.
 
 ---
 
-## 🧠 Matching Algorithm
+##  Matching Algorithm
 
 The core of JobCocoon is a **custom DSA-based matching engine**.
 
@@ -514,7 +507,7 @@ updated_at
 
 ---
 
-## 🎯 Roadmap
+## Roadmap
 
 ### Phase 1: Foundation
 - [x] Project setup
@@ -695,7 +688,7 @@ MIT License — see [LICENSE](LICENSE) file.
 
 <div align="center">
 
-### ⭐ If you find this project useful, please give it a star! 
+###  If you find this project useful, please give it a star! 
 
 **Made by [Laiba Saghir](https://github.com/LAIBA5463)**
 
