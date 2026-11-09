@@ -1,32 +1,26 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from dotenv import load_dotenv
 
-# Database URL - using SQLite for now (no setup needed!)
-SQLALCHEMY_DATABASE_URL = "sqlite:///./job_intelligence.db"
+load_dotenv()
 
-# Create the database engine
+# Use DATABASE_URL from env (PostgreSQL in production)
+SQLALCHEMY_DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "sqlite:///./job_intelligence.db"  # Local fallback
+)
+
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
-    connect_args={"check_same_thread": False}  # Only needed for SQLite
+    connect_args={"check_same_thread": False} if "sqlite" in SQLALCHEMY_DATABASE_URL else {}
 )
 
-# Create a session factory
-SessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine
-)
-
-# Base class for models
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# Dependency to get database session
 def get_db():
-    """
-    Dependency that provides a database session
-    Used in route handlers
-    """
     db = SessionLocal()
     try:
         yield db
