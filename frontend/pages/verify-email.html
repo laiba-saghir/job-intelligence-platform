@@ -107,12 +107,12 @@
             <div id="loadingState">
                 <div class="loading-spinner"></div>
                 <h2 class="verify-title">Verifying your email...</h2>
-                <p class="verify-message">Please wait a moment 🦋</p>
+                <p class="verify-message">Please wait a moment </p>
             </div>
             
             <!-- SUCCESS STATE -->
             <div id="successState" style="display: none;">
-                <div class="verify-icon">✅</div>
+                <div class="verify-icon"></div>
                 <h2 class="verify-title">Email Verified!</h2>
                 <p class="verify-message">
                     Your email has been successfully verified. 
@@ -126,7 +126,7 @@
             
             <!-- ERROR STATE -->
             <div id="errorState" style="display: none;">
-                <div class="verify-icon">❌</div>
+                <div class="verify-icon"></div>
                 <h2 class="verify-title">Verification Failed</h2>
                 <p class="verify-message" id="errorMessage">
                     The verification link is invalid or expired.
@@ -140,7 +140,7 @@
     </div>
     
     <script>
-        const API_URL = 'http://localhost:5000';
+        const API_URL = 'https://job-intelligence-platform-production-af45.up.railway.app';
         
         document.addEventListener('DOMContentLoaded', async () => {
             // Get token from URL

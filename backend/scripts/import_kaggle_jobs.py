@@ -23,14 +23,17 @@ def import_kaggle_jobs(csv_path: str, limit: int = 500):
     """
     Import jobs from Kaggle CSV into JobCocoon database.
     """
-    print(f"📂 Loading CSV: {csv_path}\n")
+    print(f" Loading CSV: {csv_path}\n")
     
     if not os.path.exists(csv_path):
         print(f"❌ File not found: {csv_path}")
         return
     
-    df = pd.read_csv(csv_path, nrows=limit)
-    print(f"✅ Loaded {len(df)} rows\n")
+    df = pd.read_csv(csv_path)
+    # Sirf woh rows jinki company available hai, phir limit lagao
+    has_company = ~df["Company Name"].astype(str).str.strip().str.lower().isin(["not available", "nan", ""])
+    df = df[has_company].head(limit)
+    print(f" Loaded {len(df)} rows\n")
     
     db = SessionLocal()
     imported = 0
@@ -42,7 +45,7 @@ def import_kaggle_jobs(csv_path: str, limit: int = 500):
             # Map CSV columns to Job model (EXACT column names)
             job_data = {
                 "title": safe_str(row.get("Job Title")),
-                "company": safe_str(row.get("Company Name"), "Unknown Company"),
+                "company": safe_str(row.get("Company Name")),
                 "location": safe_str(row.get("Location")) or None,
                 "description": safe_str(row.get("Job Description"))[:5000] or None,
                 "requirements": safe_str(row.get("Skills")) or None,
@@ -52,7 +55,7 @@ def import_kaggle_jobs(csv_path: str, limit: int = 500):
             }
             
             # Skip if title missing
-            if not job_data["title"]:
+            if not job_data["title"] or not job_data["company"]:
                 failed += 1
                 continue
             
@@ -92,12 +95,12 @@ def import_kaggle_jobs(csv_path: str, limit: int = 500):
         except Exception as e:
             failed += 1
             if failed <= 5:
-                print(f"⚠️ Row {idx} failed: {e}")
+                print(f" Row {idx} failed: {e}")
     
     db.close()
     
     print("\n" + "=" * 50)
-    print(f"✅ Import complete!")
+    print(f"   Import complete!")
     print(f"   New jobs: {imported}")
     print(f"   Merged (duplicates): {merged}")
     print(f"   Failed: {failed}")
@@ -106,9 +109,9 @@ def import_kaggle_jobs(csv_path: str, limit: int = 500):
 
 if __name__ == "__main__":
     CSV_PATH = "data/Global_AI_and_Tech_Jobs_Dataset_2026.csv"
-    LIMIT = 500  # Start with 500, can increase later
+    LIMIT = 1000  # Start with 1000, can increase later
     
-    print(f"🚀 Starting import from {CSV_PATH}")
+    print(f"   Starting import from {CSV_PATH}")
     print(f"   Limit: {LIMIT} rows\n")
     
     import_kaggle_jobs(CSV_PATH, LIMIT)

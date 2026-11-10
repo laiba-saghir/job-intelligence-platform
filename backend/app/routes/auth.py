@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
@@ -20,6 +21,9 @@ from app.utils.auth import (
 )
 from app.services.verification import send_verification, verify_user_email
 
+# Switch: Railway Variables mein REQUIRE_EMAIL_VERIFICATION=false karo to
+# email verification band ho jati hai (naye users automatically verified).
+REQUIRE_EMAIL_VERIFICATION = os.getenv("REQUIRE_EMAIL_VERIFICATION", "true").lower() == "true"
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -27,13 +31,13 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
 # ============================================
-# REGISTER (with email verification)
+# REGISTER (with optional email verification)
 # ============================================
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
     """
     Register a new user.
-    Sends verification email automatically.
+    Sends verification email only if REQUIRE_EMAIL_VERIFICATION is true.
     """
     # Check if user already exists
     existing_user = db.query(User).filter(User.email == user.email).first()
@@ -42,26 +46,26 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email already registered"
         )
-    
-    # Create new user (unverified)
+
+    # Create new user (verified automatically if verification is switched off)
     hashed_password = get_password_hash(user.password)
     new_user = User(
         name=user.name,
         email=user.email,
         password_hash=hashed_password,
-        is_verified=False
+        is_verified=not REQUIRE_EMAIL_VERIFICATION
     )
-    
+
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    
-    # Send verification email
-    email_sent = send_verification(new_user, db)
-    
-    if not email_sent:
-        print(f"⚠️ Verification email failed for {new_user.email}")
-    
+
+    # Email sirf tab bhejo jab verification on ho
+    if REQUIRE_EMAIL_VERIFICATION:
+        email_sent = send_verification(new_user, db)
+        if not email_sent:
+            print(f"⚠️ Verification email failed for {new_user.email}")
+
     return new_user
 
 
@@ -77,13 +81,13 @@ def verify_email(
     Verify user's email using token from email link.
     """
     success, message, user = verify_user_email(token, db)
-    
+
     if not success:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=message
         )
-    
+
     return {
         "success": True,
         "message": message,
@@ -104,21 +108,21 @@ def resend_verification(
     Resend verification email.
     """
     user = db.query(User).filter(User.email == request.email).first()
-    
+
     # Security: don't reveal if email exists
     if not user:
         return {
             "message": "If this email is registered, a verification link has been sent."
         }
-    
+
     if user.is_verified:
         return {
             "message": "This email is already verified. You can login."
         }
-    
+
     # Send new verification email
     email_sent = send_verification(user, db)
-    
+
     return {
         "message": "Verification email sent. Please check your inbox.",
         "sent": email_sent
@@ -138,14 +142,14 @@ def login_user(
     """
     # Find user by email
     user = db.query(User).filter(User.email == form_data.username).first()
-    
+
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"}
         )
-    
+
     # Verify password
     if not verify_password(form_data.password, user.password_hash):
         raise HTTPException(
@@ -153,7 +157,7 @@ def login_user(
             detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"}
         )
-    
+
     # Check if email is verified
     if not user.is_verified:
         raise HTTPException(
@@ -161,13 +165,13 @@ def login_user(
             detail="Please verify your email first. Check your inbox for the verification link.",
             headers={"WWW-Authenticate": "Bearer"}
         )
-    
+
     # Create access token
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
-    
+
     return {"access_token": access_token, "token_type": "bearer"}
 
 
@@ -189,7 +193,7 @@ def get_current_user(
             detail="Invalid authentication credentials",
             headers={"WWW-Authenticate": "Bearer"}
         )
-    
+
     email = payload.get("sub")
     if not email:
         raise HTTPException(
@@ -197,7 +201,7 @@ def get_current_user(
             detail="Invalid authentication credentials",
             headers={"WWW-Authenticate": "Bearer"}
         )
-    
+
     user = db.query(User).filter(User.email == email).first()
     if not user:
         raise HTTPException(
@@ -205,5 +209,5 @@ def get_current_user(
             detail="User not found",
             headers={"WWW-Authenticate": "Bearer"}
         )
-    
+
     return user

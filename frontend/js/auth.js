@@ -90,10 +90,12 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.textContent = 'Creating account...';
             showMessage('Creating your account...', 'info');
             
-            await register(name, email, password);
+            const newUser = await register(name, email, password);
             
             showMessage(
-                '✅ Account created! Check your email for verification link.',
+                newUser.is_verified
+                    ? '✅ Account created! You can log in now.'
+                    : '✅ Account created! Check your email for verification link.',
                 'success'
             );
             

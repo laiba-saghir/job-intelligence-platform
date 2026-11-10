@@ -3,17 +3,17 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
-
+ 
 # Load environment variables
 load_dotenv()
-
+ 
 # SMTP Configuration
 SMTP_EMAIL = os.getenv("SMTP_EMAIL")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
 SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
-
-
+ 
+ 
 def send_verification_email(to_email: str, user_name: str, verification_token: str) -> bool:
     """
     Send verification email to user.
@@ -28,17 +28,17 @@ def send_verification_email(to_email: str, user_name: str, verification_token: s
     """
     try:
         # Frontend URL for verification link
-        frontend_url = os.getenv("FRONTEND_URL", "http://127.0.0.1:5500")
+        frontend_url = os.getenv("FRONTEND_URL", "http://127.0.0.1:5500/frontend")
         
         # Verification link (with /frontend/ path)
         verification_link = (
-            f"{frontend_url}/frontend/pages/verify-email.html"
+            f"{frontend_url}/pages/verify-email.html"
             f"?token={verification_token}"
         )
         
         # Create email
         msg = MIMEMultipart('alternative')
-        msg['Subject'] = "🦋 Verify Your JobCocoon Account"
+        msg['Subject'] = " Verify Your JobCocoon Account"
         msg['From'] = f"JobCocoon <{SMTP_EMAIL}>"
         msg['To'] = to_email
         
@@ -130,12 +130,12 @@ def send_verification_email(to_email: str, user_name: str, verification_token: s
         <body>
             <div class="container">
                 <div class="header">
-                    <h1>🦋 JobCocoon</h1>
+                    <h1> JobCocoon </h1>
                     <p>Transform Your Career</p>
                 </div>
                 
                 <div class="content">
-                    <h2>Welcome, {user_name}! 🎉</h2>
+                    <h2>Welcome, {user_name}! </h2>
                     
                     <p>
                         Thank you for joining <strong>JobCocoon</strong> — your cozy corner for 
@@ -170,7 +170,7 @@ def send_verification_email(to_email: str, user_name: str, verification_token: s
                 </div>
                 
                 <div class="footer">
-                    <p>Made with 💛 by JobCocoon Team</p>
+                    <p>Made by JobCocoon Team</p>
                     <p style="margin-top: 8px;">
                         <a href="{frontend_url}">Visit JobCocoon</a>
                     </p>
@@ -202,14 +202,14 @@ def send_verification_email(to_email: str, user_name: str, verification_token: s
         msg.attach(MIMEText(html_content, 'html'))
         
         # Connect to SMTP and send
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=10) as server:
             server.starttls()
             server.login(SMTP_EMAIL, SMTP_PASSWORD)
             server.send_message(msg)
         
-        print(f"✅ Verification email sent to {to_email}")
+        print(f"Verification email sent to {to_email}")
         return True
         
     except Exception as e:
-        print(f"❌ Failed to send email: {str(e)}")
+        print(f"Failed to send email: {str(e)}")
         return False
