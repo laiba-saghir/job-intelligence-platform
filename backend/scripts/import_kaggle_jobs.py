@@ -1,7 +1,6 @@
 # ============================================
 # KAGGLE JOBS IMPORTER (Updated)
 # ============================================
-
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -69,6 +68,7 @@ def import_kaggle_jobs(csv_path: str, limit: int = 500):
                 
                 from app.models.skill import Skill
                 skills = []
+                seen_ids = set()  # ek job mein same skill do baar na jaye
                 for skill_name in skill_names[:10]:  # Max 10 skills
                     if len(skill_name) > 50:  # Skip too-long names
                         continue
@@ -78,6 +78,9 @@ def import_kaggle_jobs(csv_path: str, limit: int = 500):
                         db.add(skill)
                         db.commit()
                         db.refresh(skill)
+                    if skill.id in seen_ids:
+                        continue
+                    seen_ids.add(skill.id)
                     skills.append(skill)
                 
                 if skills:
@@ -93,6 +96,7 @@ def import_kaggle_jobs(csv_path: str, limit: int = 500):
                 print(f"   Progress: {imported + merged} processed ({imported} new, {merged} merged)")
                 
         except Exception as e:
+            db.rollback()  # ek row fail ho to baqi rows par asar na pare
             failed += 1
             if failed <= 5:
                 print(f" Row {idx} failed: {e}")
