@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from typing import List, Dict
 from app.models.job import Job
 from app.models.user import User
-from app.models.skill import Skill
+from app.models.skill import Skill, job_skills
 from app.models.application import Application
 
 
@@ -94,24 +94,25 @@ def get_skill_demand(db: Session, limit: int = 10) -> List[dict]:
     if total_jobs == 0:
         return []
     
-    # Count how many jobs require each skill
-    skills = db.query(Skill).all()
-    skill_demand = []
+    # Ek hi SQL query mein count + sort + limit (pehle har skill ke liye alag query thi)
+    job_count = func.count(job_skills.c.job_id)
+    rows = (
+        db.query(Skill.name, job_count.label("job_count"))
+        .join(job_skills, job_skills.c.skill_id == Skill.id)
+        .group_by(Skill.id, Skill.name)
+        .order_by(job_count.desc(), Skill.name)
+        .limit(limit)
+        .all()
+    )
     
-    for skill in skills:
-        job_count = len(skill.jobs) if skill.jobs else 0
-        if job_count > 0:
-            demand_percentage = round((job_count / total_jobs) * 100, 2)
-            skill_demand.append({
-                "skill_name": skill.name,
-                "job_count": job_count,
-                "demand_percentage": demand_percentage,
-            })
-    
-    # Sort by job_count descending
-    skill_demand.sort(key=lambda x: x["job_count"], reverse=True)
-    
-    return skill_demand[:limit]
+    return [
+        {
+            "skill_name": name,
+            "job_count": count,
+            "demand_percentage": round((count / total_jobs) * 100, 2),
+        }
+        for name, count in rows
+    ]
 
 
 def get_job_trends(db: Session, days: int = 7) -> List[dict]:

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 from sqlalchemy import or_
 from typing import List, Optional
 from pydantic import BaseModel
@@ -80,7 +80,8 @@ def get_matched_jobs(
     """
     Get jobs ranked by match score for current user
     """
-    jobs = db.query(Job).all()
+    # selectinload: saari jobs ki skills ek saath load hoti hain (N+1 queries nahi)
+    jobs = db.query(Job).options(selectinload(Job.skills)).all()
     
     if not jobs:
         return {"jobs": [], "user_skills": []}
