@@ -6,13 +6,15 @@
 
 **A job intelligence platform: skill-based job matching, duplicate merging, fake-job detection and an application tracker.**
 
+[![Live Preview](https://img.shields.io/badge/Live_Preview-Open_the_App-2EA44F?style=for-the-badge&logo=vercel&logoColor=white)](https://job-cocoon-platform.vercel.app/)
+
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-D71F00?style=flat-square&logo=sqlalchemy&logoColor=white)](https://www.sqlalchemy.org/)
 [![JWT](https://img.shields.io/badge/Auth-JWT-000000?style=flat-square&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
 [![Chart.js](https://img.shields.io/badge/Chart.js-4.4-FF6384?style=flat-square&logo=chartdotjs&logoColor=white)](https://www.chartjs.org/)
 
-[Live Demo](https://job-cocoon-platform.vercel.app/) ·
+[Live Preview](https://job-cocoon-platform.vercel.app/) ·
 [API Docs (Swagger)](https://job-intelligence-platform-production-af45.up.railway.app/docs) ·
 [Report a Bug](https://github.com/laiba-saghir/job-intelligence-platform/issues) ·
 [Request a Feature](https://github.com/laiba-saghir/job-intelligence-platform/issues)
@@ -235,7 +237,7 @@ The backend allows `http://127.0.0.1:5500` and `http://localhost:5500` by defaul
 
 </details>
 
-For the deployed version, set `CORS_ORIGINS` to `https://job-cocoon-platform.vercel.app` and `FRONTEND_URL` to `https://job-cocoon-platform.vercel.app` on the backend host.
+For the deployed version, set `CORS_ORIGINS` to `https://job-cocoon-platform.vercel.app` (origin only, no path) and `FRONTEND_URL` to `https://job-cocoon-platform.vercel.app` on the backend host.
 
 Never commit your `.env` file. It is already listed in `.gitignore`.
 
