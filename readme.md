@@ -12,11 +12,10 @@
 [![JWT](https://img.shields.io/badge/Auth-JWT-000000?style=flat-square&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
 [![Chart.js](https://img.shields.io/badge/Chart.js-4.4-FF6384?style=flat-square&logo=chartdotjs&logoColor=white)](https://www.chartjs.org/)
 
+[Live Demo](https://job-cocoon-platform.vercel.app/) ·
 [API Docs (Swagger)](https://job-intelligence-platform-production-af45.up.railway.app/docs) ·
 [Report a Bug](https://github.com/laiba-saghir/job-intelligence-platform/issues) ·
 [Request a Feature](https://github.com/laiba-saghir/job-intelligence-platform/issues)
-
-<!-- TODO: add your deployed frontend link here, e.g. [Live Demo](https://your-app.vercel.app) -->
 
 </div>
 
@@ -235,6 +234,8 @@ The backend allows `http://127.0.0.1:5500` and `http://localhost:5500` by defaul
 3. Create one for **Mail** and copy the 16-character password into `SMTP_PASSWORD`.
 
 </details>
+
+For the deployed version, set `CORS_ORIGINS` to `https://job-cocoon-platform.vercel.app` and `FRONTEND_URL` to `https://job-cocoon-platform.vercel.app` on the backend host.
 
 Never commit your `.env` file. It is already listed in `.gitignore`.
 
