@@ -1,5 +1,5 @@
 /* ============================================
-   JOBCOCOON DASHBOARD - PASTEL GREEN 🌿
+   JOBCOCOON DASHBOARD - PASTEL GREEN
    ============================================ */
 
 * {
@@ -338,6 +338,7 @@ body {
     border-radius: 12px;
     padding: 20px;
     transition: all 0.2s;
+    cursor: pointer;
 }
 
 .metric-card:hover {
