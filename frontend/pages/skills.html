@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobCocoon - Skills</title>
+    
+    <link rel="icon" type="image/png" href="../assets/JobCocoon logo.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/skills.css">
+</head>
+<body>
+    
+    <div class="dashboard">
+        
+        <!-- ============================================
+             SIDEBAR
+             ============================================ -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../assets/JobCocoon logo.png" alt="JobCocoon">
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item" title="Dashboard">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="jobs.html" class="nav-item" title="Jobs">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Jobs</span>
+                </a>
+                <a href="applications.html" class="nav-item" title="Applications">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>Applications</span>
+                </a>
+                <a href="skills.html" class="nav-item active" title="Skills">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Skills</span>
+                </a>
+                <a href="analytics.html" class="nav-item" title="Analytics">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-bottom">
+                <a href="#" class="nav-item" title="Settings">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <button class="nav-item logout-btn" onclick="logout()" title="Logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- ============================================
+             MAIN CONTENT
+             ============================================ -->
+        <main class="main-content">
+            
+            <!-- TOP BAR -->
+            <header class="topbar sk-topbar">
+                <div class="topbar-actions">
+                    <div class="user-menu">
+                        <div class="user-avatar" id="userAvatar">L</div>
+                        <div class="user-info">
+                            <span class="user-name" id="userName">Laiba</span>
+                            <span class="user-email" id="userEmail">laiba@test.com</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+                <div>
+                    <h1>Skills</h1>
+                    <p class="page-subtitle">Add the skills you have and we will rank jobs by how well they match you</p>
+                </div>
+                <button class="btn-add" id="saveBtn" disabled>
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Save Changes
+                </button>
+            </div>
+            
+            <div class="sk-layout">
+                
+                <!-- ============================================
+                     LEFT: MY SKILLS
+                     ============================================ -->
+                <section class="card sk-main">
+                    <div class="card-header">
+                        <h2>My Skills</h2>
+                        <div class="sk-header-right">
+                            <span class="sk-unsaved" id="unsavedBadge" hidden>
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                Unsaved changes
+                            </span>
+                            <span class="card-badge" id="skillCount">0 skills</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Add skill -->
+                    <div class="sk-add-row">
+                        <div class="sk-input-wrap">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input
+                                type="text"
+                                id="skillInput"
+                                class="sk-input"
+                                placeholder="Type a skill, e.g. Python"
+                                autocomplete="off"
+                                maxlength="60"
+                            >
+                            <div class="sk-dropdown" id="skillDropdown" hidden></div>
+                        </div>
+                        <button class="sk-add-btn" id="addBtn" type="button">
+                            <i class="fa-solid fa-plus"></i>
+                            Add
+                        </button>
+                    </div>
+                    <p class="sk-hint">
+                        Press Enter to add. You can also paste several skills separated by commas.
+                    </p>
+                    
+                    <!-- Progress -->
+                    <div class="sk-progress-wrap">
+                        <div class="sk-progress-text">
+                            <span id="progressLabel">0 of 10 recommended</span>
+                            <span>More skills means more jobs can match you</span>
+                        </div>
+                        <div class="sk-progress">
+                            <div class="sk-progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chips -->
+                    <div class="sk-chips" id="skillChips"></div>
+                    
+                    <!-- Empty state -->
+                    <div class="empty-state" id="emptyState" hidden>
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <h3>No skills added yet</h3>
+                        <p>Add your first skill above, or pick from the suggestions.</p>
+                    </div>
+                    
+                    <div class="sk-footer" id="skillFooter" hidden>
+                        <button class="sk-clear-btn" id="clearBtn" type="button">
+                            <i class="fa-solid fa-trash-can"></i>
+                            Clear all
+                        </button>
+                    </div>
+                </section>
+                
+                <!-- ============================================
+                     RIGHT: SUGGESTIONS + HOW IT WORKS
+                     ============================================ -->
+                <aside class="sk-side">
+                    
+                    <section class="card">
+                        <div class="card-header">
+                            <h2>Popular Skills</h2>
+                            <span class="card-badge">Click to add</span>
+                        </div>
+                        <div class="sk-suggest-list" id="popularList"></div>
+                        <p class="sk-hint sk-hint-flush" id="popularDone" hidden>
+                            You have added all the popular suggestions.
+                        </p>
+                    </section>
+                    
+                    <section class="card">
+                        <div class="card-header">
+                            <h2>How Matching Works</h2>
+                        </div>
+                        <ol class="sk-steps">
+                            <li>
+                                <span class="sk-step-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+                                <span>You add the skills you have</span>
+                            </li>
+                            <li>
+                                <span class="sk-step-icon"><i class="fa-solid fa-briefcase"></i></span>
+                                <span>Every job lists the skills it needs</span>
+                            </li>
+                            <li>
+                                <span class="sk-step-icon"><i class="fa-solid fa-percent"></i></span>
+                                <span>Match score = your matching skills divided by the skills the job needs</span>
+                            </li>
+                            <li>
+                                <span class="sk-step-icon"><i class="fa-solid fa-ranking-star"></i></span>
+                                <span>The Jobs page shows the best matches first</span>
+                            </li>
+                        </ol>
+                        <a href="jobs.html" class="sk-link-btn">
+                            <i class="fa-solid fa-arrow-right"></i>
+                            See matching jobs
+                        </a>
+                    </section>
+                    
+                </aside>
+            </div>
+            
+        </main>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="../js/api.js"></script>
+    <script src="../js/skills.js"></script>
+    
+</body>
+</html>

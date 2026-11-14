@@ -1,0 +1,427 @@
+/* ============================================
+   SKILLS PAGE
+   (uses colors and layout from dashboard.css)
+   ============================================ */
+
+/* hidden attribute must always win */
+[hidden] {
+    display: none !important;
+}
+
+/* Top bar has only the user menu on this page */
+.sk-topbar .topbar-actions {
+    margin-left: auto;
+}
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+.sk-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.sk-side {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.sk-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sk-unsaved {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #b45309;
+    background: #fef3c7;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+/* ============================================
+   ADD SKILL ROW
+   ============================================ */
+.sk-add-row {
+    display: flex;
+    gap: 10px;
+}
+
+.sk-input-wrap {
+    position: relative;
+    flex: 1;
+}
+
+.sk-input-wrap > i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.sk-input {
+    width: 100%;
+    padding: 12px 14px 12px 40px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--heading);
+    background: var(--white);
+    outline: none;
+    transition: all 0.2s;
+}
+
+.sk-input::placeholder {
+    color: #9ca3af;
+}
+
+.sk-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(129, 199, 132, 0.2);
+}
+
+.sk-add-btn {
+    padding: 0 20px;
+    background: linear-gradient(135deg, #81c784, #66bb6a);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.sk-add-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(102, 187, 106, 0.3);
+}
+
+.sk-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 10px 0 20px;
+}
+
+.sk-hint-flush {
+    margin: 12px 0 0;
+}
+
+/* ============================================
+   AUTOCOMPLETE DROPDOWN
+   ============================================ */
+.sk-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border: 1px solid var(--border-green);
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    padding: 6px;
+    max-height: 260px;
+    overflow-y: auto;
+    z-index: 20;
+}
+
+.sk-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 12px;
+    border: none;
+    background: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--heading);
+    text-align: left;
+    cursor: pointer;
+}
+
+.sk-dropdown-item:hover,
+.sk-dropdown-item.active {
+    background: var(--mint-light);
+}
+
+.sk-dropdown-item i {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.sk-dropdown-item.new {
+    font-weight: 600;
+    color: var(--heading-light);
+}
+
+/* ============================================
+   PROGRESS
+   ============================================ */
+.sk-progress-wrap {
+    margin-bottom: 20px;
+}
+
+.sk-progress-text {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.sk-progress-text span:first-child {
+    font-weight: 600;
+    color: var(--heading);
+}
+
+.sk-progress {
+    height: 8px;
+    background: var(--mint-light);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.sk-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #a5d6a7, #66bb6a);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+}
+
+/* ============================================
+   SKILL CHIPS
+   ============================================ */
+.sk-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.sk-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 8px 8px 14px;
+    background: var(--mint-light);
+    border: 1px solid var(--border-green);
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--heading);
+    animation: skPop 0.2s ease;
+}
+
+.sk-chip-remove {
+    width: 22px;
+    height: 22px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--heading-light);
+    font-size: 11px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.sk-chip-remove:hover {
+    background: var(--danger);
+    color: white;
+}
+
+@keyframes skPop {
+    from { opacity: 0; transform: scale(0.9); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.sk-footer {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.sk-clear-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.sk-clear-btn:hover {
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+/* ============================================
+   SUGGESTIONS
+   ============================================ */
+.sk-suggest-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.sk-suggest {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    background: var(--white);
+    border: 1px dashed var(--primary);
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--heading-light);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.sk-suggest i {
+    font-size: 10px;
+}
+
+.sk-suggest:hover {
+    background: var(--mint-light);
+    border-style: solid;
+}
+
+/* ============================================
+   HOW IT WORKS
+   ============================================ */
+.sk-steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.sk-steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text);
+}
+
+.sk-step-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--mint-light);
+    color: var(--heading-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+}
+
+.sk-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--heading-light);
+    text-decoration: none;
+    transition: gap 0.2s;
+}
+
+.sk-link-btn:hover {
+    gap: 12px;
+}
+
+/* ============================================
+   SAVE BUTTON STATES (btn-add comes from dashboard.css)
+   ============================================ */
+.btn-add:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ============================================
+   TOAST
+   ============================================ */
+.sk-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    color: white;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    animation: skToastIn 0.3s ease;
+}
+
+.sk-toast.success { background: var(--success); }
+.sk-toast.error   { background: var(--danger); }
+.sk-toast.warning { background: var(--warning); }
+.sk-toast.info    { background: var(--info); }
+
+@keyframes skToastIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+    .sk-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    
+    .sk-progress-text span:last-child {
+        display: none;
+    }
+}
