@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <link rel="stylesheet" href="../css/style.css">
     
     <style>
@@ -112,12 +114,12 @@
             
             <!-- SUCCESS STATE -->
             <div id="successState" style="display: none;">
-                <div class="verify-icon"></div>
+                <div class="verify-icon"><i class="fa-solid fa-circle-check" style="color: var(--success, #16a34a);"></i></div>
                 <h2 class="verify-title">Email Verified!</h2>
                 <p class="verify-message">
                     Your email has been successfully verified. 
                     You can now login to JobCocoon and start your 
-                    career transformation journey! 🦋
+                    career transformation journey! <i class="fa-solid fa-leaf"></i>
                 </p>
                 <a href="../index.html" class="btn-home">
                     Go to Login
@@ -126,7 +128,7 @@
             
             <!-- ERROR STATE -->
             <div id="errorState" style="display: none;">
-                <div class="verify-icon"></div>
+                <div class="verify-icon"><i class="fa-solid fa-circle-xmark" style="color: var(--danger, #dc2626);"></i></div>
                 <h2 class="verify-title">Verification Failed</h2>
                 <p class="verify-message" id="errorMessage">
                     The verification link is invalid or expired.

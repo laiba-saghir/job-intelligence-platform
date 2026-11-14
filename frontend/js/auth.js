@@ -94,8 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             showMessage(
                 newUser.is_verified
-                    ? '✅ Account created! You can log in now.'
-                    : '✅ Account created! Check your email for verification link.',
+                    ? 'Account created! You can log in now.'
+                    : 'Account created! Check your email for verification link.',
                 'success'
             );
             
@@ -141,7 +141,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // MESSAGE HELPER
     // ========================================
     function showMessage(text, type) {
-        messageDiv.textContent = text;
+        // Icon according to message type (Font Awesome)
+        const icons = {
+            success: 'fa-circle-check',
+            error: 'fa-circle-exclamation',
+            info: 'fa-circle-info'
+        };
+        
+        messageDiv.textContent = '';
+        
+        const icon = document.createElement('i');
+        icon.className = `fa-solid ${icons[type] || icons.info}`;
+        icon.style.marginRight = '8px';
+        
+        messageDiv.appendChild(icon);
+        messageDiv.appendChild(document.createTextNode(text));
         messageDiv.className = `show ${type}`;
     }
     

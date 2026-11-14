@@ -330,14 +330,14 @@ async function viewJob(jobId) {
                 
                 ${matchInfo && matchInfo.matched_skills.length > 0 ? `
                     <div style="margin-bottom: 16px;">
-                        <h3 style="font-size: 14px; color: var(--heading); margin-bottom: 8px;">✅ Matched Skills</h3>
+                        <h3 style="font-size: 14px; color: var(--heading); margin-bottom: 8px;"><i class="fa-solid fa-circle-check" style="color: var(--success, #16a34a);"></i> Matched Skills</h3>
                         <div class="skill-chips">${matchInfo.matched_skills.map(s => `<span class="skill-chip">${s}</span>`).join('')}</div>
                     </div>
                 ` : ''}
                 
                 ${matchInfo && matchInfo.missing_skills.length > 0 ? `
                     <div style="margin-bottom: 20px;">
-                        <h3 style="font-size: 14px; color: var(--heading); margin-bottom: 8px;">⚠️ Missing Skills</h3>
+                        <h3 style="font-size: 14px; color: var(--heading); margin-bottom: 8px;"><i class="fa-solid fa-triangle-exclamation" style="color: #d97706;"></i> Missing Skills</h3>
                         <div class="skill-chips">${matchInfo.missing_skills.map(s => `<span class="skill-chip missing">${s}</span>`).join('')}</div>
                     </div>
                 ` : ''}
@@ -469,5 +469,4 @@ document.addEventListener('click', (e) => {
     if (e.target.classList.contains('modal')) {
         e.target.classList.remove('active');
     }
-});
-            
+});   
