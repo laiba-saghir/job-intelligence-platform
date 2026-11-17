@@ -394,3 +394,5 @@
         grid-template-columns: 1fr;
     }
 }
+/* Consolidated plan updates */
+[hidden]{display:none!important}.active-skill-filter{margin:12px 0;padding:10px 14px;background:var(--mint-light);border-radius:10px;color:var(--heading)}.active-skill-filter button{margin-left:10px;border:0;background:none;color:var(--primary-dark);font-weight:700;cursor:pointer}.jobs-count{margin:10px 0 16px;color:var(--text-muted);font-size:13px}.load-more-wrap{display:flex;justify-content:center;margin:24px 0}.load-more-wrap button{min-width:190px}.job-card-actions .btn-icon{flex:0 0 38px}.job-card-actions .btn-icon[title="Delete job"]{color:#dc2626}@media(max-width:560px){.jobs-grid{grid-template-columns:1fr}.job-card-actions{flex-wrap:wrap}}
