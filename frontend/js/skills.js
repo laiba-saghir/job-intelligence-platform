@@ -33,7 +33,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     bindEvents();
     await loadUserInfo();
-    await loadSkills();\n    bindProfileForm();
+    await loadSkills();
+    bindProfileForm();
 });
 
 
@@ -161,7 +162,8 @@ function addFromInput() {
 
 // Accepts one skill or several separated by commas
 function addSkills(rawText) {
-    const parts = rawText.split(/[,;\n]+/);
+    const parts = rawText.split(/[,;
+]+/);
     let added = 0;
     let duplicates = 0;
     
