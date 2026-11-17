@@ -165,30 +165,18 @@ function switchFilter(filter) {
 // SEARCH
 // ============================================
 function handleSearch(e) {
-    const query = e.target.value.toLowerCase().trim();
+    const query = String(e.target.value || '').toLowerCase().trim();
+    const filtered = allApplications.filter(app => {
+        const matchesStatus = currentFilter === 'all' || app.status === currentFilter;
+        const matchesText = !query || [app.job_title, app.company, app.location]
+            .some(value => String(value || '').toLowerCase().includes(query));
+        return matchesStatus && matchesText;
+    });
     const container = document.getElementById('applicationsList');
-    
-    if (!query) {
-        renderApplications();
+    if (!filtered.length) {
+        container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-magnifying-glass"></i><h3>No results found</h3><p>Try another keyword or status filter.</p></div>';
         return;
     }
-    
-    const filtered = allApplications.filter(app => 
-        app.job_title.toLowerCase().includes(query) ||
-        app.company.toLowerCase().includes(query)
-    );
-    
-    if (filtered.length === 0) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <h3>No results found</h3>
-                <p>Try different keywords</p>
-            </div>
-        `;
-        return;
-    }
-    
     container.innerHTML = filtered.map(app => renderAppCard(app)).join('');
 }
 
