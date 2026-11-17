@@ -430,17 +430,26 @@ function renderEmptySalary() {
 // ============================================
 // BOOKMARK TOGGLE
 // ============================================
-function toggleBookmark(btn, jobId) {
-    btn.classList.toggle('bookmarked');
+async function toggleBookmark(btn, jobId) {
     const icon = btn.querySelector('i');
-    
-    if (btn.classList.contains('bookmarked')) {
-        icon.className = 'fa-solid fa-bookmark';
-        console.log('Bookmarked job:', jobId);
-    } else {
-        icon.className = 'fa-regular fa-bookmark';
-        console.log('Removed bookmark:', jobId);
-    }
+    const wasSaved = btn.classList.contains('bookmarked');
+    btn.disabled = true;
+    try {
+        if (wasSaved) {
+            await apiCall('/saved-jobs/' + jobId, 'DELETE');
+            btn.classList.remove('bookmarked');
+            icon.className = 'fa-regular fa-bookmark';
+        } else {
+            await apiCall('/saved-jobs/', 'POST', {job_id: jobId});
+            btn.classList.add('bookmarked');
+            icon.className = 'fa-solid fa-bookmark';
+        }
+    } catch (error) {
+        const toast = document.createElement('div');
+        toast.textContent = 'Saved Jobs backend is required: ' + error.message;
+        toast.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#b45309;color:white;padding:12px 16px;border-radius:10px;z-index:9999';
+        document.body.appendChild(toast); setTimeout(() => toast.remove(), 3500);
+    } finally { btn.disabled = false; }
 }
 
 
