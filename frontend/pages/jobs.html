@@ -101,11 +101,13 @@
                     <h1>Jobs </h1>
                     <p class="page-subtitle">Find and track jobs that match your skills</p>
                 </div>
-                <button class="btn-add" onclick="openAddJobModal()">
+                <button class="btn-add" id="addJobBtn" onclick="openAddJobModal()" hidden>
                     <i class="fa-solid fa-plus"></i>
                     Add Job
                 </button>
             </div>
+            <div class="active-skill-filter" id="activeSkillFilter" hidden>Filtering by skill: <strong id="activeSkillName"></strong> <button type="button" id="clearSkillFilter">Clear</button></div>
+            <div class="jobs-count" id="jobsCount" aria-live="polite"></div>
             
             <!-- FILTER TABS -->
             <div class="filter-tabs">
@@ -185,7 +187,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-cancel" onclick="closeAddJobModal()">Cancel</button>
-                    <button type="submit" class="btn-primary-modal">Add Job</button>
+                    <button type="submit" class="btn-primary-modal">Save Job</button>
                 </div>
             </form>
         </div>
