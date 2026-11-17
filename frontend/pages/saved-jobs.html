@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobCocoon - Saved Jobs</title>
+  <link rel="icon" type="image/png" href="../assets/JobCocoon logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/saved-jobs.css">
+</head>
+<body>
+<div class="dashboard">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><img src="../assets/JobCocoon logo.png" alt="JobCocoon"></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a>
+      <a href="jobs.html" class="nav-item"><i class="fa-solid fa-briefcase"></i><span>Jobs</span></a>
+      <a href="saved-jobs.html" class="nav-item active"><i class="fa-solid fa-bookmark"></i><span>Saved Jobs</span></a>
+      <a href="applications.html" class="nav-item"><i class="fa-solid fa-file-lines"></i><span>Applications</span></a>
+      <a href="skills.html" class="nav-item"><i class="fa-solid fa-graduation-cap"></i><span>Skills</span></a>
+      <a href="analytics.html" class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Analytics</span></a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+      <button class="nav-item logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></button>
+    </div>
+  </aside>
+  <main class="main-content">
+    <header class="topbar">
+      <div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="savedSearch" type="search" placeholder="Search saved jobs..."></div>
+      <div class="topbar-actions"><div class="user-menu"><div class="user-avatar" id="userAvatar">U</div><div class="user-info"><span class="user-name" id="userName">User</span><span class="user-email" id="userEmail"></span></div></div></div>
+    </header>
+    <section class="page-header"><div><h1>Saved Jobs</h1><p class="page-subtitle">Keep interesting opportunities in one place.</p></div><a class="saved-back-link" href="jobs.html"><i class="fa-solid fa-arrow-left"></i> Browse jobs</a></section>
+    <div class="saved-jobs-toolbar"><span id="savedCount">Loading saved jobs...</span><button class="saved-refresh" id="refreshSaved"><i class="fa-solid fa-rotate"></i> Refresh</button></div>
+    <section class="saved-jobs-grid" id="savedJobsGrid" aria-live="polite"><div class="saved-state">Loading your saved jobs...</div></section>
+  </main>
+</div>
+<script src="../js/api.js"></script>
+<script src="../js/dashboard.js"></script>
+<script src="../js/saved-jobs.js"></script>
+</body>
+</html>
