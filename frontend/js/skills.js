@@ -162,8 +162,7 @@ function addFromInput() {
 
 // Accepts one skill or several separated by commas
 function addSkills(rawText) {
-    const parts = rawText.split(/[,;
-]+/);
+    const parts = rawText.split(/[,;\\n]+/);
     let added = 0;
     let duplicates = 0;
     
