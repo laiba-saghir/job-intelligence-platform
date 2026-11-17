@@ -3,7 +3,7 @@
 // ============================================
 
 const MAX_SKILLS = 50;          // most skills a user can have
-const MAX_SKILL_LENGTH = 40;    // longest single skill name
+const MAX_SKILL_LENGTH = 100;    // longest single skill name
 const RECOMMENDED_SKILLS = 10;  // goal shown in the progress bar
 
 // Quick-add suggestions
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     bindEvents();
     await loadUserInfo();
-    await loadSkills();
+    await loadSkills();\n    bindProfileForm();
 });
 
 
@@ -45,7 +45,10 @@ async function loadUserInfo() {
         const user = await getCurrentUser();
         document.getElementById('userName').textContent = user.name;
         document.getElementById('userEmail').textContent = user.email;
-        document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+        document.getElementById('userAvatar').textContent = (user.name || 'U').charAt(0).toUpperCase();
+        if (document.getElementById('profileRole')) document.getElementById('profileRole').value = user.desired_role || user.role_title || '';
+        if (document.getElementById('profileLocation')) document.getElementById('profileLocation').value = user.location || '';
+        if (document.getElementById('profileExperience')) document.getElementById('profileExperience').value = user.experience_level || '';
     } catch (error) {
         console.error('User load error:', error);
         redirectIfSessionExpired(error);
@@ -463,4 +466,31 @@ function showToast(message, type = 'info') {
     document.body.appendChild(toast);
     
     setTimeout(() => toast.remove(), 3000);
+}
+
+// PROFILE FORM — backend contract to be implemented in the profile backend phase.
+function bindProfileForm() {
+  const form = document.getElementById('profileForm');
+  if (!form) return;
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    const button = document.getElementById('saveProfileBtn');
+    const status = document.getElementById('profileStatus');
+    const payload = {
+      desired_role: document.getElementById('profileRole').value.trim(),
+      location: document.getElementById('profileLocation').value.trim(),
+      experience_level: document.getElementById('profileExperience').value || null
+    };
+    button.disabled = true; button.textContent = 'Saving...'; status.textContent = '';
+    try {
+      const updated = await apiCall('/auth/me', 'PATCH', payload);
+      status.textContent = 'Profile saved.';
+      status.className = 'profile-success';
+      if (updated && typeof updated === 'object') window.currentProfile = updated;
+      showToast('Profile saved. Recommendations can now use these details.', 'success');
+    } catch (error) {
+      status.textContent = 'Profile API is waiting for the backend update: ' + error.message;
+      status.className = 'profile-pending';
+    } finally { button.disabled = false; button.textContent = 'Save Profile'; }
+  });
 }
