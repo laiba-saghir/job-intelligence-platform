@@ -78,25 +78,17 @@ async function loadStats() {
 // ============================================
 function renderApplications() {
     const container = document.getElementById('applicationsList');
-    
-    let filtered = allApplications;
-    
-    if (currentFilter !== 'all') {
-        filtered = allApplications.filter(app => app.status === currentFilter);
-    }
-    
-    if (filtered.length === 0) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <i class="fa-solid fa-file-lines"></i>
-                <h3>No applications ${currentFilter !== 'all' ? `with status "${currentFilter}"` : 'yet'}</h3>
-                <p>Apply to jobs from the Jobs page</p>
-                <button onclick="window.location.href='jobs.html'">Browse Jobs</button>
-            </div>
-        `;
+    const query = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
+    const filtered = allApplications.filter(app => {
+        const matchesStatus = currentFilter === 'all' || app.status === currentFilter;
+        const matchesText = !query || [app.job_title, app.company, app.location]
+            .some(value => String(value || '').toLowerCase().includes(query));
+        return matchesStatus && matchesText;
+    });
+    if (!filtered.length) {
+        container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-file-lines"></i><h3>No matching applications</h3><p>Try another search or status filter.</p><button onclick="window.location.href=\'jobs.html\'">Browse Jobs</button></div>';
         return;
     }
-    
     container.innerHTML = filtered.map(app => renderAppCard(app)).join('');
 }
 
@@ -164,21 +156,7 @@ function switchFilter(filter) {
 // ============================================
 // SEARCH
 // ============================================
-function handleSearch(e) {
-    const query = String(e.target.value || '').toLowerCase().trim();
-    const filtered = allApplications.filter(app => {
-        const matchesStatus = currentFilter === 'all' || app.status === currentFilter;
-        const matchesText = !query || [app.job_title, app.company, app.location]
-            .some(value => String(value || '').toLowerCase().includes(query));
-        return matchesStatus && matchesText;
-    });
-    const container = document.getElementById('applicationsList');
-    if (!filtered.length) {
-        container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-magnifying-glass"></i><h3>No results found</h3><p>Try another keyword or status filter.</p></div>';
-        return;
-    }
-    container.innerHTML = filtered.map(app => renderAppCard(app)).join('');
-}
+function handleSearch() { renderApplications(); }
 
 
 // ============================================
