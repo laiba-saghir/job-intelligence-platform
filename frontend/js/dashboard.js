@@ -1,12 +1,6 @@
-// ============================================
-// JOBCOCOON DASHBOARD - LOGIC
-// ============================================
-
 document.addEventListener('DOMContentLoaded', async () => {
     
-    // ========================================
-    // AUTH CHECK
-    // ========================================
+    
     if (!isLoggedIn()) {
         window.location.href = '../index.html';
         return;
@@ -221,9 +215,9 @@ function renderSkills(skills) {
     }
     
     container.innerHTML = skills.slice(0, 5).map(skill => `
-        <div class="skill-item" onclick="filterBySkill('${skill.skill_name}')">
+        <div class="skill-item" data-skill="${htmlEscape(skill.skill_name)}" onclick="filterBySkill(this.dataset.skill)">
             <div class="skill-header">
-                <span class="skill-name">${skill.skill_name}</span>
+                <span class="skill-name">${htmlEscape(skill.skill_name)}</span>
                 <span class="skill-percent">${skill.demand_percentage}%</span>
             </div>
             <div class="skill-bar-bg">
@@ -231,6 +225,21 @@ function renderSkills(skills) {
             </div>
         </div>
     `).join('');
+}
+
+
+// ============================================
+// SAFE TEXT HELPER
+// ============================================
+function htmlEscape(text) {
+    // Makes API text safe to place inside innerHTML (text AND attribute values)
+    if (text === null || text === undefined) return '';
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 }
 
 
@@ -272,10 +281,10 @@ async function loadBestMatches() {
             return `
                 <div class="job-row">
                     <div>
-                        <div class="job-title">${job.title}</div>
-                        <div class="job-company">${job.company} • ${job.location || 'Remote'}</div>
+                        <div class="job-title">${htmlEscape(job.title)}</div>
+                        <div class="job-company">${htmlEscape(job.company)} • ${htmlEscape(job.location || 'Remote')}</div>
                     </div>
-                    <div class="job-salary">${job.salary_range || 'Not specified'}</div>
+                    <div class="job-salary">${htmlEscape(job.salary_range || 'Not specified')}</div>
                     <div class="match-badge ${matchClass}">
                         ${job.match_score}% match
                     </div>
@@ -291,7 +300,7 @@ async function loadBestMatches() {
             <div class="empty-state">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 <h3>Failed to load jobs</h3>
-                <p>${error.message}</p>
+                <p>${htmlEscape(error.message)}</p>
             </div>
         `;
     }
@@ -355,10 +364,10 @@ function renderCompanies(companies) {
         return `
             <div class="company-item">
                 <div class="company-logo" style="background: ${colors[index % colors.length]}">
-                    ${initials}
+                    ${htmlEscape(initials)}
                 </div>
                 <div class="company-info">
-                    <div class="company-name">${company.name}</div>
+                    <div class="company-name">${htmlEscape(company.name)}</div>
                     <div class="company-jobs">${company.count} jobs</div>
                 </div>
             </div>
@@ -382,8 +391,8 @@ function renderSalary(jobs) {
         return `
             <div class="salary-item">
                 <div class="salary-header">
-                    <span class="salary-role">${job.title}</span>
-                    <span class="salary-range-text">${job.salary_range}</span>
+                    <span class="salary-role">${htmlEscape(job.title)}</span>
+                    <span class="salary-range-text">${htmlEscape(job.salary_range)}</span>
                 </div>
                 <div class="salary-bar-bg">
                     <div class="salary-bar-fill" style="width: ${percentage}%"></div>

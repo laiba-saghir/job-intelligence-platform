@@ -1,6 +1,3 @@
-// ============================================
-// JOBS PAGE - LOGIC
-// ============================================
 
 let allJobs = [];
 let matchedJobs = [];
@@ -59,7 +56,7 @@ async function loadJobs() {
             <div class="empty-state" style="grid-column: 1/-1;">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 <h3>Failed to load jobs</h3>
-                <p>${error.message}</p>
+                <p>${escapeHtml(error.message)}</p>
             </div>
         `;
     }
@@ -120,10 +117,10 @@ function renderJobCard(job) {
     const isSaved = savedJobIds.includes(job.id);
     
     const matchedChips = (job.matched_skills || []).map(s => 
-        `<span class="skill-chip">${s}</span>`
+        `<span class="skill-chip">${escapeHtml(s)}</span>`
     ).join('');
     const missingChips = (job.missing_skills || []).map(s => 
-        `<span class="skill-chip missing">${s}</span>`
+        `<span class="skill-chip missing">${escapeHtml(s)}</span>`
     ).join('');
     
     return `
@@ -331,14 +328,14 @@ async function viewJob(jobId) {
                 ${matchInfo && matchInfo.matched_skills.length > 0 ? `
                     <div style="margin-bottom: 16px;">
                         <h3 style="font-size: 14px; color: var(--heading); margin-bottom: 8px;"><i class="fa-solid fa-circle-check" style="color: var(--success, #16a34a);"></i> Matched Skills</h3>
-                        <div class="skill-chips">${matchInfo.matched_skills.map(s => `<span class="skill-chip">${s}</span>`).join('')}</div>
+                        <div class="skill-chips">${matchInfo.matched_skills.map(s => `<span class="skill-chip">${escapeHtml(s)}</span>`).join('')}</div>
                     </div>
                 ` : ''}
                 
                 ${matchInfo && matchInfo.missing_skills.length > 0 ? `
                     <div style="margin-bottom: 20px;">
                         <h3 style="font-size: 14px; color: var(--heading); margin-bottom: 8px;"><i class="fa-solid fa-triangle-exclamation" style="color: #d97706;"></i> Missing Skills</h3>
-                        <div class="skill-chips">${matchInfo.missing_skills.map(s => `<span class="skill-chip missing">${s}</span>`).join('')}</div>
+                        <div class="skill-chips">${matchInfo.missing_skills.map(s => `<span class="skill-chip missing">${escapeHtml(s)}</span>`).join('')}</div>
                     </div>
                 ` : ''}
                 
@@ -353,7 +350,7 @@ async function viewJob(jobId) {
         `;
         
     } catch (error) {
-        content.innerHTML = `<div style="padding: 40px; text-align: center;"><p>${error.message}</p></div>`;
+        content.innerHTML = `<div style="padding: 40px; text-align: center;"><p>${escapeHtml(error.message)}</p></div>`;
     }
 }
 
@@ -430,10 +427,14 @@ function debounce(fn, delay) {
 }
 
 function escapeHtml(text) {
-    if (!text) return '';
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+    // Makes API text safe to place inside innerHTML (text AND attribute values)
+    if (text === null || text === undefined) return '';
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 }
 
 function showToast(message, type = 'info') {
@@ -469,4 +470,4 @@ document.addEventListener('click', (e) => {
     if (e.target.classList.contains('modal')) {
         e.target.classList.remove('active');
     }
-});   
+});

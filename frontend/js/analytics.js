@@ -264,6 +264,21 @@ function renderStatusChart(applications) {
 
 
 // ============================================
+// SAFE TEXT HELPER
+// ============================================
+function htmlEscape(text) {
+    // Makes API text safe to place inside innerHTML (text AND attribute values)
+    if (text === null || text === undefined) return '';
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+
+// ============================================
 // RENDER INSIGHTS
 // ============================================
 function renderInsights(data) {
@@ -320,8 +335,8 @@ function renderInsights(data) {
                 <i class="fa-solid ${insight.icon}"></i>
             </div>
             <div class="insight-content">
-                <div class="insight-title">${insight.title}</div>
-                <div class="insight-text">${insight.text}</div>
+                <div class="insight-title">${htmlEscape(insight.title)}</div>
+                <div class="insight-text">${htmlEscape(insight.text)}</div>
             </div>
         </div>
     `).join('');
