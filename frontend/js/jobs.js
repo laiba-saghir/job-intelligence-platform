@@ -154,15 +154,18 @@ function closeJobDetail() { document.getElementById('jobDetailModal').classList.
 async function applyToJob(id) {
   const job = allJobs.find(j => Number(j.id) === Number(id));
   const url = safeExternalUrl(job?.url);
-  // Hide immediately for a responsive UI; restore if the API rejects the application.
+  // Open synchronously from the click so the browser does not block the new tab.
+  const postingTab = url ? window.open(url, '_blank') : null;
+  if (postingTab) postingTab.opener = null;
   appliedJobIds.add(Number(id)); renderJobs(); closeJobDetail();
   try {
     await apiCall('/applications/', 'POST', {job_id:id, notes:'Applied from JobCocoon. Original posting: ' + (url || 'not provided')});
-    showToast('Application tracked. Opening original posting if available.', 'success');
-    if (url) window.open(url, '_blank', 'noopener,noreferrer');
+    showToast('Application tracked. The original posting has been opened.', 'success');
   } catch (e) {
     if (!/already applied/i.test(e.message)) {
-      appliedJobIds.delete(Number(id)); renderJobs(); showToast(e.message, 'error'); return;
+      appliedJobIds.delete(Number(id)); renderJobs();
+      if (postingTab) postingTab.close();
+      showToast(e.message, 'error'); return;
     }
     showToast('This job is already in your applications.', 'info');
   }
