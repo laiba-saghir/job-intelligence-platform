@@ -124,7 +124,7 @@
                                 class="sk-input"
                                 placeholder="Type a skill, e.g. Python"
                                 autocomplete="off"
-                                maxlength="60"
+                                maxlength="100"
                             >
                             <div class="sk-dropdown" id="skillDropdown" hidden></div>
                         </div>
@@ -213,7 +213,17 @@
                 </aside>
             </div>
             
-        </main>
+
+            <section class="card profile-card" id="profileCard">
+              <div class="card-header"><div><h2>Job Profile</h2><p class="page-subtitle">These details help improve job recommendations.</p></div></div>
+              <form id="profileForm" class="profile-form">
+                <div class="profile-field"><label for="profileRole">Desired role</label><input id="profileRole" name="desired_role" maxlength="100" placeholder="e.g. Junior Python Developer"></div>
+                <div class="profile-field"><label for="profileLocation">Preferred location</label><input id="profileLocation" name="location" maxlength="120" placeholder="e.g. Lahore / Remote"></div>
+                <div class="profile-field"><label for="profileExperience">Experience level</label><select id="profileExperience" name="experience_level"><option value="">Select experience</option><option value="student">Student</option><option value="entry">Entry level</option><option value="junior">Junior</option><option value="mid">Mid level</option><option value="senior">Senior</option></select></div>
+                <div class="profile-actions"><span id="profileStatus" role="status"></span><button class="btn-add" type="submit" id="saveProfileBtn">Save Profile</button></div>
+              </form>
+            </section>
+\n        </main>
     </div>
     
     <!-- Scripts -->
