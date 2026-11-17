@@ -141,8 +141,8 @@
         </div>
     </div>
     
+    <script src="../js/api.js"></script>
     <script>
-        const API_URL = 'https://job-intelligence-platform-production-af45.up.railway.app';
         
         document.addEventListener('DOMContentLoaded', async () => {
             // Get token from URL
@@ -162,25 +162,13 @@
             }
             
             try {
-                const response = await fetch(`${API_URL}/auth/verify?token=${token}`, {
-                    method: 'GET',
-                });
-                
-                const data = await response.json();
-                
-                if (response.ok) {
-                    loadingState.style.display = 'none';
-                    successState.style.display = 'block';
-                } else {
-                    loadingState.style.display = 'none';
-                    errorState.style.display = 'block';
-                    errorMessage.textContent = data.detail || 'Verification failed.';
-                }
-                
+                await apiCall('/auth/verify?token=' + encodeURIComponent(token));
+                loadingState.style.display = 'none';
+                successState.style.display = 'block';
             } catch (error) {
                 loadingState.style.display = 'none';
                 errorState.style.display = 'block';
-                errorMessage.textContent = 'Cannot connect to server. Please try again.';
+                errorMessage.textContent = error.message || 'Cannot connect to server. Please try again.';
             }
         });
     </script>
