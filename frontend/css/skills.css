@@ -425,3 +425,5 @@
         display: none;
     }
 }
+/* Profile fields */
+.profile-card{margin-top:24px}.profile-card .page-subtitle{margin:5px 0 0}.profile-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.profile-field label{display:block;margin-bottom:7px;font-size:13px;font-weight:600;color:var(--heading)}.profile-field input,.profile-field select{width:100%;padding:12px;border:1px solid var(--border);border-radius:9px;background:var(--white);color:var(--heading);font:inherit}.profile-actions{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px}.profile-actions span{font-size:13px}.profile-success{color:#15803d}.profile-pending{color:#b45309}@media(max-width:800px){.profile-form{grid-template-columns:1fr}.profile-actions{grid-column:auto;align-items:flex-start;flex-direction:column}}
