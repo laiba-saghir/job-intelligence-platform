@@ -91,16 +91,18 @@ document.addEventListener('DOMContentLoaded', () => {
             showMessage('Creating your account...', 'info');
             
             const newUser = await register(name, email, password);
-            
+            if (newUser.otp_required || newUser.verification_method === 'otp') {
+                sessionStorage.setItem('jobcocoon_pending_email', email);
+                window.location.href = 'pages/otp-verification.html';
+                return;
+            }
             showMessage(
                 newUser.is_verified
                     ? 'Account created! You can log in now.'
-                    : 'Account created! Check your email for verification link.',
+                    : 'Account created! Check your email for the verification link.',
                 'success'
             );
-            
             registerForm.reset();
-            
             setTimeout(() => {
                 loginForm.style.display = 'block';
                 registerForm.style.display = 'none';
