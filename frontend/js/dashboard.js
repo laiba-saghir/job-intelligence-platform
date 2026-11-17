@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    
-    
+    // This shared script is also included on secondary pages for bookmark helpers.
+    // Only run dashboard data loading on the actual dashboard page.
+    if (!document.getElementById('metricsGrid')) return;
+
     if (!isLoggedIn()) {
         window.location.href = '../index.html';
         return;
