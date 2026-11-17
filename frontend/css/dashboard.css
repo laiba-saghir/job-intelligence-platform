@@ -872,3 +872,5 @@ body {
         font-size: 24px;
     }
 }
+/* Dashboard metric cards navigate to their related sections. */
+.metrics-grid .metric-card[onclick]{cursor:pointer}.metrics-grid .metric-card[onclick]:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
